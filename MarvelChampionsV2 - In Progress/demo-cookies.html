@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Démo gestion des cookies multiliste</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+  crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        function setCookie(cname, cvalue, exdays=365) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    
+        // Load default values for scen checkboxes
+        $(document).ready(function()
+        {
+            var chkScenario = document.getElementsByName("scen");
+            for (i in chkScenario) {      
+                var inputName = chkScenario[i].value;
+                var cookieValue = (getCookie(inputName) == 'true');  
+                chkScenario[i].checked = cookieValue;
+            }
+        });
+
+    </script>
+</head>
+
+<body>       
+    <fieldset>
+        <legend>Décochez les scénarios que vous n'avez pas :</legend>  
+        <div id="scenList">
+            <P><input type="checkbox" name="scen" checked value="sce1" onchange="setCookie(this.value,this.checked)">Scénario 1</P>
+            <P><input type="checkbox" name="scen" checked value="sce2" onchange="setCookie(this.value,this.checked)">Scénario 2</P>
+            <P><input type="checkbox" name="scen" checked value="sce3" onchange="setCookie(this.value,this.checked)">Scénario 3</P>
+            <P><input type="checkbox" name="scen" checked value="sce4" onchange="setCookie(this.value,this.checked)">Scénario 4</P>
+            <P><input type="checkbox" name="scen" checked value="sce5" onchange="setCookie(this.value,this.checked)">Scénario 5</P>
+            <P><input type="checkbox" name="scen" checked value="sce6" onchange="setCookie(this.value,this.checked)">Scénario 6</P>
+        </div>
+    </fieldset>
+ 
+</body>
+</html>

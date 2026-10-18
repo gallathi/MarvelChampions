@@ -1,0 +1,448 @@
+@media screen and (min-width: 701px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+
+@media screen and (max-width: 701px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+
+header {
+    background-color:#901124;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 10px;
+    left:0;
+    position: fixed;
+    top: 0;
+    color:#fff;
+    padding-top: 5px;
+    z-index: 1;
+}
+
+
+footer {
+  background-color:#901124;
+  width: 100%;
+  height: 9%;
+  margin: 0;
+  padding: 0;
+  left:0;
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  padding-top: 10px;
+}
+
+
+header h1, header p {
+    margin:0;
+    padding: 0;
+    text-shadow: 8px 5px 5px gray;
+}
+
+
+@media screen and (min-width: 601px) {
+    header h1 {
+      font-size: 45px;
+    }
+    header p {
+      font-size: 20px;
+    }
+    .block {
+      display: block;
+      min-height: 90px;
+    }
+  }
+
+
+  @media screen and (max-width: 600px) {
+    header h1 {
+      font-size: 30px;
+    }
+    .block {
+      display: none;
+    }
+    .porteimage {
+      margin-top: 60px;
+      display: block;
+    }
+  }
+
+
+body {
+    background-image: url("../images/autres/Background2.jpg");
+    background-repeat: repeat;
+    z-index: 2;
+}
+
+
+.title {
+    margin-top: 10px;
+    width:90%;
+    max-height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+
+
+.title h2 {
+  font-weight: bold;
+  position: relative;
+  margin-top: 10px;
+}
+
+
+@media screen and (min-width: 701px) {
+    .imagedebase {
+      margin-top:10px;
+      max-width: 45%;
+      border-radius:45px;
+    }
+}
+
+
+@media screen and (max-width: 700px) {
+    .imagedebase {
+      margin-top:10px;
+      max-width: 100%;
+      border-radius:45px;
+    }
+    .title h2 {
+      font-size: 22px;
+      margin-top:10px;
+    }
+    .title h3 {
+      font-size: 16px;
+      margin-top:10px;
+    }
+}
+
+
+#tirage form .container {
+  max-width: 100%;
+}
+
+
+#listes form .container {
+  max-width: 60%;
+}
+
+
+.b {
+   font-weight: bold;
+   color: rgb(65, 61, 61);
+}
+
+button {
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 40%;
+  background-color: #901124;
+  color: #fff;
+  text-align: center;
+}
+
+
+#randomizer {
+  position: absolute;
+  background-color: rgb(226, 218, 218);
+  color: #901124;
+  text-align: center;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+
+@media screen and (min-width: 801px) {
+  button {
+      width: 30%;
+      border-radius:15px;
+      margin-left: 35%;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      font-size: 23px;
+      white-space: pre-wrap;
+      
+  }
+  #randomizer {
+    width: 54%;
+    border-radius:15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 23px;
+    margin-left: 36%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  button {
+      width: 50%;
+      border-radius:15px;
+      margin-left: 25%;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      font-size: 18px;
+      white-space: pre-wrap;
+  }
+  #randomizer {
+    width: 60%;
+    margin-left: 35%;
+    border-radius:15px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 17px;
+  }
+}
+
+#joueurs {
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+}
+
+
+header:hover {
+  background-color: #9b0f24;
+}
+
+
+legend {
+  text-align: center;
+  font-weight: bold;
+}
+
+
+#tirage div {
+  text-align: center;
+}
+
+
+@media screen and (min-width: 801px) {
+  #tirage div img {
+    margin-top: 10px;
+    max-width: 100%; /* 24em; */
+    min-width: 8em;
+    /* max-height: 20em; 
+    min-height: 12em; */    
+    border-radius: 15px;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  #tirage div img {
+    margin-top: 10px;
+    max-width: 100%; /* 16em; */
+    min-width: 12em;
+    /* max-height: 12em;
+    min-height: 4em; */     
+    border-radius: 15px;
+  }
+}
+
+
+.col {
+  line-height: 1em;
+}
+
+
+@media screen and (min-width: 801px) {
+  .randbutton {
+    color: #fff;
+    background-color: grey;
+    border-color: white;
+    padding-left:15px;
+    padding-right:15px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    line-height: 1.5em;
+    border-color: #fff;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  .randbutton {
+    color: #fff;
+    background-color: grey;
+    border-color: #fff;
+    padding-left:15px;
+    padding-right:15px;
+    margin-top: 5px;
+    max-height: 12%;
+    height:60px;
+    white-space: pre-wrap;
+    margin-bottom: 0;
+    border-radius: 15px;
+    font-size: 14px;
+    border-color: #fff;
+  }
+}
+
+.openHide {
+  height: 40px;
+  min-width: 150px;
+  width: auto;
+  font-size: 17px;
+  padding: 6px;
+  line-height: 15px;
+  display:  inline-flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.dropdown {
+  width: auto;
+  min-width: 150px;
+  font-size: 17px;
+  padding:6px;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.credits {
+  font-size: 15px;
+  text-align: center;
+  margin:10px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+@media screen and (min-width: 701px) {
+  .List {
+    display: none;
+    margin:0;
+    padding-left: 5px;
+    line-height: 2em;
+  };
+}
+
+
+@media screen and (max-width: 700px) {
+  .List {
+    display: none;
+    margin:0;
+    padding-left: 5px;    
+    font-size: 14px;
+    line-height: 2em;
+  };
+}
+
+
+#redo {
+  position: absolute;
+  background-color: rgb(226, 218, 218);
+  color: #901124;
+  text-align: center;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+
+@media screen and (min-width: 801px) {
+  #redo {
+    width: 25%;
+    border-radius:15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 23px;
+    margin-left: 10%;
+  }
+}
+
+
+@media screen and (max-width: 801px) {
+  #redo {
+    width: 28%;
+    margin-left: 5%;
+    border-radius:15px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 17px;
+  }
+}
+
+
+.cookie-disclaimer {
+  background: #000000;
+  color: #FFF;
+  opacity: 0.9;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  height: 130px;
+  position: fixed;
+}
+
+
+.cookieChecker {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  height: 130px;
+  min-width: 100%;
+}
+
+
+@media screen and (max-width: 1001px) and (min-width: 701px) {
+  .cookieChecker {
+    font-size: 15px;
+  }
+}
+
+
+@media screen and (max-width: 700px) {
+  .cookieChecker {
+    font-size: 13px;
+  }
+}
+
+#rightCookie {
+  width: 30%;
+  right: 0;
+  margin-right: 15%;
+  margin-top: 0px;
+}
+
+#leftCookie {
+  width: 30%;
+  left:0;
+  margin-left:15%;
+  margin-top: 0px;
+}
+
+
+#isLoop:hover {
+  background-color: #ac1128;
+  color: #fff;
+  text-align: center;
+}
+
+
+.randbutton:hover {
+  background-color: #fff;
+  color: grey;
+  border-color: grey;
+}
+
+
+#redo:hover, #randomizer:hover {
+  background-color: #fff;
+  color: rgb(192, 11, 11);
+}
