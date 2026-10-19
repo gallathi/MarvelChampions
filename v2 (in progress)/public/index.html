@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Générateur Marvel Champions</title>
+  <meta name="description" content="Tirez au sort méchant, modules, héros et affinités pour vos parties de Marvel Champions, et suivez les héros les moins joués.">
+  <meta name="theme-color" content="#0b0d12">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Générateur Marvel Champions">
+  <meta property="og:description" content="Un lancer de dé, une partie de Marvel Champions toujours différente.">
+  <meta property="og:image" content="og-image.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="modulepreload" href="js/main.js">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#view">Aller au contenu</a>
+
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="#/collection" aria-label="Générateur Marvel Champions, accueil">
+        <span class="brand__mark"><img class="brand__icon" src="favicon.svg" alt="" width="28" height="28">Générateur Marvel Champions</span>
+      </a>
+      <nav class="tabs" aria-label="Navigation">
+        <span class="tabs__indicator" aria-hidden="true"></span>
+        <a class="tabs__link" href="#/collection" data-nav="collection">
+          <span class="tabs__icon" data-icon="grid"></span>
+          <span class="tabs__label">Collection</span>
+          <span class="tabs__badge" data-role="owned-count"></span>
+        </a>
+        <a class="tabs__link" href="#/partie" data-nav="game">
+          <span class="tabs__icon" data-icon="dice"></span>
+          <span class="tabs__label">Partie</span>
+        </a>
+        <a class="tabs__link" href="#/historique" data-nav="history">
+          <span class="tabs__icon" data-icon="history"></span>
+          <span class="tabs__label">Historique</span>
+          <span class="tabs__badge" data-role="games-count"></span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="view" class="container" tabindex="-1">
+    <div class="loading" role="status">Chargement du multivers…</div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Illustrations des intercalaires : un grand merci à <strong>Stéphane Jarny</strong> pour son
+        <a href="https://drive.google.com/drive/folders/1ZIDEIVUde8r_cukUIVEclr7lOi2zq_zP?usp=sharing" target="_blank" rel="noopener">travail d’illustration</a>.</p>
+      <p class="site-footer__legal">Projet de fan non officiel. Marvel Champions: The Card Game © Fantasy Flight Games / Marvel.</p>
+    </div>
+  </footer>
+
+  <div id="toasts" class="toasts"></div>
+
+  <dialog id="share-dialog" class="dialog" aria-labelledby="share-title">
+    <div class="dialog__body">
+      <h2 id="share-title" class="dialog__title">Partager la partie</h2>
+      <p>Copiez ce lien et envoyez-le à vos coéquipiers :</p>
+      <input class="input" type="text" readonly aria-label="Lien de la partie">
+      <div class="dialog__actions">
+        <button type="button" class="btn btn--primary" data-action="close-dialog">Fermer</button>
+      </div>
+    </div>
+  </dialog>
+</body>
+</html>
