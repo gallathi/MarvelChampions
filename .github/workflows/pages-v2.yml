@@ -26,8 +26,15 @@ jobs:
       # Disable Jekyll processing (keeps _files / _folders)
       - run: touch "v2/.nojekyll"
       - uses: actions/configure-pages@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+        working-directory: 'v2'
+      - run: npm run build
+        working-directory: 'v2'
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: 'v2'
+          path: 'v2/dist'
       - id: deployment
         uses: actions/deploy-pages@v4
