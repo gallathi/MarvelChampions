@@ -69,8 +69,7 @@ export function renderGame(root, app, signal) {
           <p class="eyebrow">Étape 2</p>
           <h1 id="view-title" class="display" tabindex="-1">Votre partie</h1>
           <p class="lead">${plural(state.players, 'joueur')} · ${plural(state.moduleCount, 'module')}.
-            Verrouillez ce que vous voulez garder, puis lancez les dés
-            <kbd>R</kbd>.</p>
+            Verrouillez ce que vous voulez garder, puis lancez les dés.</p>
         </div>
         <div class="toolbar">
           <button type="button" class="btn btn--primary btn--lg" data-action="roll-all">${icons.dice} Tout tirer</button>
@@ -109,6 +108,7 @@ export function renderGame(root, app, signal) {
       </section>
     </section>`;
 
+  const view = root.querySelector('.view--game');
   const slotEls = new Map([...root.querySelectorAll('.slot')].map((el) => [el.dataset.key, el]));
   const playCounts = { heroes: app.playCounts('heroes'), scenarios: app.playCounts('scenarios') };
   let busy = false;
@@ -129,7 +129,7 @@ export function renderGame(root, app, signal) {
     const select = el.querySelector('[data-role="select"]');
     select.innerHTML = `<option value="">🎲 Aléatoire</option>${ids.map((id) => {
       const it = app.item(slot.category, id);
-      return `<option value="${esc(id)}" ${taken.has(id) ? 'disabled' : ''}>${esc(it.name)}</option>`;
+      return it ? `<option value="${esc(id)}" ${taken.has(id) ? 'disabled' : ''}>${esc(it.name)}</option>` : '';
     }).join('')}`;
     select.value = value ?? '';
 
@@ -223,7 +223,7 @@ export function renderGame(root, app, signal) {
       return;
     }
     busy = true;
-    root.classList.add('is-busy');
+    view.classList.add('is-busy');
     const result = roll({
       slots, values: state.values, pools: app.pools(), targets, avoidRepeat, weights: app.weights(),
     });
@@ -237,7 +237,7 @@ export function renderGame(root, app, signal) {
     } finally {
       syncAll();
       busy = false;
-      root.classList.remove('is-busy');
+      view.classList.remove('is-busy');
     }
   }
 
@@ -318,13 +318,6 @@ export function renderGame(root, app, signal) {
       }
     });
     reveal([key]);
-  }, { signal });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key.toLowerCase() !== 'r' || event.ctrlKey || event.metaKey || event.altKey) return;
-    if (event.target.closest('input, select, textarea, dialog')) return;
-    event.preventDefault();
-    rollAll();
   }, { signal });
 
   syncAll();

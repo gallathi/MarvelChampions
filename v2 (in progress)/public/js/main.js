@@ -1,11 +1,13 @@
 import { CATEGORIES, COLLECTABLE } from './config.js';
 import { newlyUnlocked } from './achievements.js';
 import { buildSlots } from './draw.js';
-import { bump, comicBurst, reducedMotion, toast } from './dom.js';
-import { drawSignature, entryFromValues, favorWeight, loadHistory, playCounts, saveHistory } from './history.js';
+import { bump, comicBurst, confirmDialog, reducedMotion, toast } from './dom.js';
+import {
+  HISTORY_KEY, drawSignature, entryFromValues, favorWeight, loadHistory, playCounts, readStoredHistory, saveHistory,
+} from './history.js';
 import { icons } from './icons.js';
 import { decodeGame } from './share.js';
-import { loadState, saveState } from './store.js';
+import { STATE_KEY, loadState, saveState } from './store.js';
 import { renderCollection } from './views/collection.js';
 import { renderGame } from './views/game.js';
 import { renderHistory } from './views/history.js';
@@ -43,7 +45,7 @@ async function loadContent() {
 
 function createApp(content) {
   const state = loadState(content);
-  let history = loadHistory();
+  let playedGames = loadHistory();
   const index = Object.fromEntries(
     Object.keys(CATEGORIES).map((cat) => [cat, new Map(content[cat].map((item) => [item.id, item]))]),
   );
@@ -51,18 +53,26 @@ function createApp(content) {
   return {
     content,
     state,
-    get history() { return history; },
+    get history() { return playedGames; },
     update(mutate) {
       mutate(state);
       saveState(state);
     },
     updateHistory(mutate) {
-      const before = history;
-      history = mutate(history) ?? history;
-      saveHistory(history);
+      // Relit le stockage avant d'écrire : un autre onglet a pu enregistrer une partie entre-temps
+      const before = readStoredHistory() ?? playedGames;
+      playedGames = mutate(before) ?? before;
+      saveHistory(playedGames);
       this.refreshNav();
       window.dispatchEvent(new CustomEvent('history-change'));
-      announceAchievements(newlyUnlocked(before, history, { heroes: this.pools().heroes }));
+      announceAchievements(newlyUnlocked(before, playedGames, { heroes: this.pools().heroes }));
+    },
+    /** Recharge état et historique écrits par un autre onglet (l'objet `state` est mis à jour sur place). */
+    reloadFromStorage() {
+      const fresh = loadState(content);
+      for (const key of Object.keys(state)) delete state[key];
+      Object.assign(state, fresh);
+      playedGames = loadHistory();
     },
     item: (cat, id) => index[cat].get(id),
     slots: () => buildSlots(state),
@@ -73,12 +83,12 @@ function createApp(content) {
         content[cat].map((i) => i.id).filter((id) => !state.excluded[cat]?.includes(id)),
       ]));
     },
-    playCounts: (category) => playCounts(history, category),
+    playCounts: (category) => playCounts(playedGames, category),
     /** Poids de tirage si l'option « favoriser les moins joués » est active. */
     weights() {
       if (!state.favorUnplayed) return {};
       return Object.fromEntries(['heroes', 'scenarios'].map((cat) => {
-        const counts = playCounts(history, cat);
+        const counts = playCounts(playedGames, cat);
         return [cat, (id) => favorWeight(counts.get(id)?.plays ?? 0)];
       }));
     },
@@ -99,7 +109,7 @@ function createApp(content) {
       const total = COLLECTABLE.reduce((n, cat) => n + content[cat].length, 0);
       document.querySelector('[data-role="owned-count"]').textContent = `${owned}/${total}`;
       const games = document.querySelector('[data-role="games-count"]');
-      const text = history.length ? String(history.length) : '';
+      const text = playedGames.length ? String(playedGames.length) : '';
       if (games.textContent !== text) {
         games.textContent = text;
         bump(games);
@@ -130,22 +140,70 @@ function viewFromHash() {
   return 'collection';
 }
 
-function route(app) {
-  const match = window.location.hash.match(/^#\/partie\/(.+)$/);
-  if (match) {
-    const game = decodeGame(match[1], app.content);
-    if (game) {
-      app.update((s) => Object.assign(s, game, { locked: {} }));
-      toast('Partie partagée chargée.', 'success');
-    } else {
-      toast('Ce lien de partie est invalide.', 'error');
+/** Affiche la vue demandée (sans animation de transition si `animate` est faux). */
+function renderView(app, view, { animate }) {
+  for (const link of document.querySelectorAll('[data-nav]')) {
+    if (link.dataset.nav === view) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
+  }
+  placeIndicator({ animate });
+  document.title = `${VIEWS[view].title} · Générateur Marvel Champions`;
+  controller?.abort();
+  controller = new AbortController();
+  VIEWS[view].render(root, app, controller.signal);
+  app.refreshNav();
+}
+
+/** Résumé lisible d'une partie partagée, pour la boîte de confirmation. */
+function describeGame(app, game) {
+  const name = (cat, id) => app.item(cat, id)?.name;
+  const lines = [];
+  if (game.values.scenario) {
+    const mode = name('modes', game.values.mode);
+    lines.push(`Méchant : ${name('scenarios', game.values.scenario)}${mode ? ` (${mode})` : ''}`);
+  }
+  for (let i = 0; i < game.players; i++) {
+    const hero = name('heroes', game.values[`hero-${i}`]);
+    const aspect = name('aspects', game.values[`aspect-${i}`]);
+    if (hero) lines.push(`Joueur ${i + 1} : ${hero}${aspect ? ` · ${aspect}` : ''}`);
+  }
+  return lines;
+}
+
+/** Applique une partie reçue par lien, après confirmation si elle remplace un tirage en cours. */
+async function applySharedGame(app, game) {
+  const hasDraw = Object.keys(app.state.values).length > 0;
+  const identical = JSON.stringify(app.state.values) === JSON.stringify(game.values);
+  if (hasDraw && !identical) {
+    const confirmed = await confirmDialog({
+      title: 'Charger la partie partagée ?',
+      message: 'Elle remplacera votre tirage actuel. Votre collection et votre historique ne changent pas.',
+      details: describeGame(app, game),
+      confirmLabel: 'Charger la partie',
+      cancelLabel: 'Garder la mienne',
+    });
+    if (!confirmed) {
+      toast('Lien ignoré : votre tirage actuel est conservé.');
+      return;
     }
-    history.replaceState(null, '', '#/partie');
+  }
+  app.update((s) => Object.assign(s, game, { locked: {} }));
+  renderView(app, 'game', { animate: false });
+  toast('Partie partagée chargée.', 'success');
+}
+
+function route(app) {
+  // Lien partagé : on nettoie l'adresse, on affiche la page, puis on propose de charger la partie
+  const match = window.location.hash.match(/^#\/partie\/(.+)$/);
+  let sharedGame;
+  if (match) {
+    window.history.replaceState(null, '', '#/partie');
+    sharedGame = decodeGame(match[1], app.content);
+    if (!sharedGame) toast('Ce lien de partie est invalide.', 'error');
   }
 
   const view = viewFromHash();
-  const isNewView = view !== currentView;
-  const moveFocus = Boolean(currentView) && isNewView;
+  const moveFocus = Boolean(currentView) && view !== currentView;
   // Sens du glissement : vers la droite si on avance dans les onglets, vers la gauche sinon
   if (moveFocus) {
     document.documentElement.dataset.nav = ORDER.indexOf(view) > ORDER.indexOf(currentView) ? 'next' : 'prev';
@@ -153,16 +211,7 @@ function route(app) {
   currentView = view;
 
   const render = () => {
-    for (const link of document.querySelectorAll('[data-nav]')) {
-      if (link.dataset.nav === view) link.setAttribute('aria-current', 'page');
-      else link.removeAttribute('aria-current');
-    }
-    placeIndicator({ animate: moveFocus });
-    document.title = `${VIEWS[view].title} · Générateur Marvel Champions`;
-    controller?.abort();
-    controller = new AbortController();
-    VIEWS[view].render(root, app, controller.signal);
-    app.refreshNav();
+    renderView(app, view, { animate: moveFocus });
     if (moveFocus) {
       window.scrollTo({ top: 0 });
       root.querySelector('#view-title')?.focus({ preventScroll: true });
@@ -170,10 +219,12 @@ function route(app) {
   };
 
   // Transition fluide entre les vues quand le navigateur le permet
-  if (moveFocus && document.startViewTransition && !reducedMotion()) {
-    document.startViewTransition(render);
-  } else {
-    render();
+  const transition = moveFocus && document.startViewTransition && !reducedMotion()
+    ? document.startViewTransition(render)
+    : (render(), null);
+
+  if (sharedGame) {
+    Promise.resolve(transition?.finished).finally(() => applySharedGame(app, sharedGame));
   }
 }
 
@@ -182,6 +233,12 @@ for (const el of document.querySelectorAll('[data-icon]')) el.innerHTML = icons[
 try {
   const app = createApp(await loadContent());
   window.addEventListener('hashchange', () => route(app));
+  // Un autre onglet a modifié la collection, le tirage ou l'historique : on se met à jour
+  window.addEventListener('storage', (event) => {
+    if (event.key !== null && event.key !== STATE_KEY && event.key !== HISTORY_KEY) return;
+    app.reloadFromStorage();
+    if (currentView) renderView(app, currentView, { animate: false });
+  });
   route(app);
 } catch (error) {
   console.error(error);
@@ -203,7 +260,7 @@ let touch = null;
 root.addEventListener('touchstart', (event) => {
   const t = event.touches[0];
   touch = event.touches.length === 1 && !event.target.closest('input, select, textarea, dialog, .segmented')
-    ? { x: t.clientX, y: t.clientY, time: Date.now() }
+    ? { x: t.clientX, y: t.clientY }
     : null;
 }, { passive: true });
 root.addEventListener('touchend', (event) => {

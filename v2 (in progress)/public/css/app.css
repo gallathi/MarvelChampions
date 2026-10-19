@@ -118,17 +118,6 @@ main.container {
   outline: none;
 }
 
-kbd {
-  display: inline-block;
-  min-width: 1.6em;
-  padding: 0 0.4em;
-  border: 1px solid var(--border-strong);
-  border-bottom-width: 3px;
-  border-radius: 6px;
-  background: var(--surface-2);
-  font: 600 0.8em/1.6 var(--font-body);
-  text-align: center;
-}
 
 /* ---------- En-tête ---------- */
 
@@ -1383,7 +1372,18 @@ kbd {
 .dialog::backdrop { background: rgb(0 0 0 / 0.65); backdrop-filter: blur(4px); }
 .dialog__body { padding: 1.5rem; }
 .dialog__title { margin: 0 0 0.5rem; font: 400 2rem/1 var(--font-display); text-transform: uppercase; }
-.dialog__actions { display: flex; justify-content: flex-end; margin-top: 1rem; }
+.dialog__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; margin-top: 1.25rem; }
+.dialog__message { margin: 0 0 0.75rem; color: var(--muted); }
+.dialog__details {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  list-style: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+}
+.dialog__details li { padding-block: 0.15rem; font-weight: 600; }
+.dialog[open] { animation: rise 0.3s var(--ease-out); }
 
 .loading,
 .load-error {

@@ -5,7 +5,7 @@ import { validatePools } from '../draw.js';
 import { bump, esc, srcsetOf, stagger, thumbSrc, toast } from '../dom.js';
 import { icons } from '../icons.js';
 
-const normalize = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 const range = (n) => Array.from({ length: n }, (_, i) => i + 1);
 
 function segmented(name, legend, max, current) {

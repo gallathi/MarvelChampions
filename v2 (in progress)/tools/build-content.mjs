@@ -1,4 +1,5 @@
-// Scanne public/images/<catégorie>/, génère les miniatures WebP et public/data/content.json.
+// 1. Convertit en WebP toute image JPEG/PNG/AVIF de public/images (l'original est supprimé).
+// 2. Génère les miniatures WebP et public/data/content.json.
 // Le nom de chaque fichier (sans extension) devient le libellé affiché :
 // pour ajouter un héros, déposer "images/heros/Wolverine.jpg" puis relancer `npm run content`.
 
@@ -8,11 +9,12 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
 const PUBLIC_DIR = fileURLToPath(new URL('../public/', import.meta.url));
-const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
+const TO_CONVERT = new Set(['.jpg', '.jpeg', '.png', '.avif']);
 
 // Largeurs des miniatures : 400 pour les grilles et listes, 800 pour les cartes de la partie
 const THUMB_WIDTHS = [400, 800];
 const THUMB_QUALITY = 74;
+const FULL_QUALITY = 82;
 
 // clé du catalogue -> dossier dans public/images
 const CATEGORIES = {
@@ -51,12 +53,30 @@ async function makeThumb(source, target, width) {
 }
 
 let generated = 0;
+let converted = 0;
+
+/** Remplace chaque image non WebP de l'arborescence par sa version WebP pleine taille. */
+async function convertToWebp(dir) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    const path = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) {
+      await convertToWebp(path);
+    } else if (TO_CONVERT.has(extname(entry.name).toLowerCase())) {
+      const target = `${dir}/${basename(entry.name, extname(entry.name))}.webp`;
+      await sharp(path).webp({ quality: FULL_QUALITY, effort: 5 }).toFile(target);
+      await rm(path);
+      converted++;
+    }
+  }
+}
+
+await convertToWebp(`${PUBLIC_DIR}images`);
 
 async function scan(key, dir) {
   const files = await readdir(`${PUBLIC_DIR}images/${dir}`, { withFileTypes: true });
   const items = [];
   for (const f of files) {
-    if (!f.isFile() || !IMAGE_EXT.has(extname(f.name).toLowerCase())) continue;
+    if (!f.isFile() || extname(f.name).toLowerCase() !== '.webp') continue;
     const name = basename(f.name, extname(f.name)).normalize('NFC');
     const thumbs = {};
     for (const width of THUMB_WIDTHS) {
@@ -79,7 +99,7 @@ async function scan(key, dir) {
   return items;
 }
 
-const content = { generatedAt: new Date().toISOString() };
+const content = {};
 for (const [key, dir] of Object.entries(CATEGORIES)) {
   content[key] = await scan(key, dir);
 }
@@ -100,4 +120,4 @@ await mkdir(`${PUBLIC_DIR}data`, { recursive: true });
 await writeFile(`${PUBLIC_DIR}data/content.json`, JSON.stringify(content, null, 2) + '\n');
 
 const summary = Object.keys(CATEGORIES).map((k) => `${content[k].length} ${k}`).join(', ');
-console.log(`content.json généré : ${summary} (${generated} miniature(s) créée(s))`);
+console.log(`content.json généré : ${summary} (${converted} image(s) convertie(s) en WebP, ${generated} miniature(s) créée(s))`);

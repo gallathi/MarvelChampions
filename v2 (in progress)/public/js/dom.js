@@ -52,6 +52,27 @@ export function toast(message, tone = 'info', { action, duration = 3200 } = {}) 
   setTimeout(remove, duration);
 }
 
+/**
+ * Boîte de confirmation (remplace window.confirm). Résout `true` si l'utilisateur confirme.
+ * `details` : lignes affichées en liste sous le message (texte brut).
+ */
+export function confirmDialog({ title, message, details = [], confirmLabel = 'Confirmer', cancelLabel = 'Annuler' }) {
+  const dialog = document.getElementById('confirm-dialog');
+  dialog.querySelector('.dialog__title').textContent = title;
+  dialog.querySelector('.dialog__message').textContent = message;
+  const list = dialog.querySelector('.dialog__details');
+  list.replaceChildren(...details.map((line) => Object.assign(document.createElement('li'), { textContent: line })));
+  list.hidden = details.length === 0;
+  dialog.querySelector('[data-role="confirm"]').textContent = confirmLabel;
+  dialog.querySelector('[data-role="cancel"]').textContent = cancelLabel;
+  dialog.returnValue = '';
+  dialog.showModal();
+  dialog.querySelector('[data-role="confirm"]').focus();
+  return new Promise((resolve) => {
+    dialog.addEventListener('close', () => resolve(dialog.returnValue === 'confirm'), { once: true });
+  });
+}
+
 const BURST_WORDS = ['BAM !', 'POW !', 'KRAKOOM !', 'WHAM !', 'SNIKT !', 'THWIP !', 'ZAP !'];
 
 /** Onomatopée façon comics au centre de l'écran (purement décorative). */

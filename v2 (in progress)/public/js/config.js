@@ -18,3 +18,22 @@ export const ASPECT_COLORS = {
   justice: '#f2c230',
   protection: '#3fb468',
 };
+
+/** Catégorie du catalogue d'un emplacement de tirage ('hero-2' -> 'heroes'), ou null. */
+export function categoryOfSlot(key) {
+  if (key === 'scenario') return 'scenarios';
+  if (key === 'mode') return 'modes';
+  const match = /^(module|hero|aspect)-\d+$/.exec(key);
+  return match ? { module: 'modules', hero: 'heroes', aspect: 'aspects' }[match[1]] : null;
+}
+
+/** Ne garde que les valeurs de tirage valides : emplacement connu et identifiant présent au catalogue. */
+export function knownValues(values, content) {
+  const clean = {};
+  if (!values || typeof values !== 'object') return clean;
+  for (const [key, id] of Object.entries(values)) {
+    const cat = categoryOfSlot(key);
+    if (cat && typeof id === 'string' && content[cat]?.some((item) => item.id === id)) clean[key] = id;
+  }
+  return clean;
+}

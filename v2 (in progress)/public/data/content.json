@@ -1,10 +1,9 @@
 {
-  "generatedAt": "2026-10-19T08:01:19.618Z",
   "scenarios": [
     {
       "id": "crane-rouge",
       "name": "Crâne Rouge",
-      "image": "images/scenarios/Crâne Rouge.jpg",
+      "image": "images/scenarios/Crâne Rouge.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Crâne Rouge.webp",
         "800": "thumbs/800/scenarios/Crâne Rouge.webp"
@@ -13,7 +12,7 @@
     {
       "id": "crossbones",
       "name": "Crossbones",
-      "image": "images/scenarios/Crossbones.jpg",
+      "image": "images/scenarios/Crossbones.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Crossbones.webp",
         "800": "thumbs/800/scenarios/Crossbones.webp"
@@ -22,7 +21,7 @@
     {
       "id": "entreprise-a-risques",
       "name": "Entreprise à risques",
-      "image": "images/scenarios/Entreprise à risques.jpg",
+      "image": "images/scenarios/Entreprise à risques.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Entreprise à risques.webp",
         "800": "thumbs/800/scenarios/Entreprise à risques.webp"
@@ -31,7 +30,7 @@
     {
       "id": "formule-mutagene",
       "name": "Formule mutagène",
-      "image": "images/scenarios/Formule mutagène.jpg",
+      "image": "images/scenarios/Formule mutagène.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Formule mutagène.webp",
         "800": "thumbs/800/scenarios/Formule mutagène.webp"
@@ -40,7 +39,7 @@
     {
       "id": "fuir-le-musee",
       "name": "Fuir le musée",
-      "image": "images/scenarios/Fuir le musée.jpg",
+      "image": "images/scenarios/Fuir le musée.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Fuir le musée.webp",
         "800": "thumbs/800/scenarios/Fuir le musée.webp"
@@ -49,7 +48,7 @@
     {
       "id": "infiltrer-le-musee",
       "name": "Infiltrer le musée",
-      "image": "images/scenarios/Infiltrer le musée.jpg",
+      "image": "images/scenarios/Infiltrer le musée.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Infiltrer le musée.webp",
         "800": "thumbs/800/scenarios/Infiltrer le musée.webp"
@@ -58,7 +57,7 @@
     {
       "id": "kang-le-conquerant",
       "name": "Kang le conquérant",
-      "image": "images/scenarios/Kang le conquérant.jpg",
+      "image": "images/scenarios/Kang le conquérant.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Kang le conquérant.webp",
         "800": "thumbs/800/scenarios/Kang le conquérant.webp"
@@ -67,7 +66,7 @@
     {
       "id": "klaw",
       "name": "Klaw",
-      "image": "images/scenarios/Klaw.jpg",
+      "image": "images/scenarios/Klaw.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Klaw.webp",
         "800": "thumbs/800/scenarios/Klaw.webp"
@@ -76,7 +75,7 @@
     {
       "id": "l-homme-absorbant",
       "name": "L'homme absorbant",
-      "image": "images/scenarios/L'homme absorbant.jpg",
+      "image": "images/scenarios/L'homme absorbant.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/L'homme absorbant.webp",
         "800": "thumbs/800/scenarios/L'homme absorbant.webp"
@@ -85,7 +84,7 @@
     {
       "id": "la-confrerie-des-badoon",
       "name": "La confrérie des Badoon",
-      "image": "images/scenarios/La confrérie des Badoon.jpg",
+      "image": "images/scenarios/La confrérie des Badoon.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/La confrérie des Badoon.webp",
         "800": "thumbs/800/scenarios/La confrérie des Badoon.webp"
@@ -94,7 +93,7 @@
     {
       "id": "le-caid",
       "name": "Le Caïd",
-      "image": "images/scenarios/Le Caïd.jpg",
+      "image": "images/scenarios/Le Caïd.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Le Caïd.webp",
         "800": "thumbs/800/scenarios/Le Caïd.webp"
@@ -103,7 +102,7 @@
     {
       "id": "les-demolisseurs",
       "name": "Les Démolisseurs",
-      "image": "images/scenarios/Les Démolisseurs.jpg",
+      "image": "images/scenarios/Les Démolisseurs.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Les Démolisseurs.webp",
         "800": "thumbs/800/scenarios/Les Démolisseurs.webp"
@@ -112,7 +111,7 @@
     {
       "id": "nebula",
       "name": "Nebula",
-      "image": "images/scenarios/Nebula.jpg",
+      "image": "images/scenarios/Nebula.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Nebula.webp",
         "800": "thumbs/800/scenarios/Nebula.webp"
@@ -121,7 +120,7 @@
     {
       "id": "rhino",
       "name": "Rhino",
-      "image": "images/scenarios/Rhino.jpg",
+      "image": "images/scenarios/Rhino.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Rhino.webp",
         "800": "thumbs/800/scenarios/Rhino.webp"
@@ -130,7 +129,7 @@
     {
       "id": "ronan-l-accusateur",
       "name": "Ronan l'accusateur",
-      "image": "images/scenarios/Ronan l'accusateur.jpg",
+      "image": "images/scenarios/Ronan l'accusateur.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Ronan l'accusateur.webp",
         "800": "thumbs/800/scenarios/Ronan l'accusateur.webp"
@@ -139,7 +138,7 @@
     {
       "id": "taskmaster",
       "name": "Taskmaster",
-      "image": "images/scenarios/Taskmaster.jpg",
+      "image": "images/scenarios/Taskmaster.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Taskmaster.webp",
         "800": "thumbs/800/scenarios/Taskmaster.webp"
@@ -148,7 +147,7 @@
     {
       "id": "ultron",
       "name": "Ultron",
-      "image": "images/scenarios/Ultron.jpg",
+      "image": "images/scenarios/Ultron.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Ultron.webp",
         "800": "thumbs/800/scenarios/Ultron.webp"
@@ -157,7 +156,7 @@
     {
       "id": "zola",
       "name": "Zola",
-      "image": "images/scenarios/Zola.jpg",
+      "image": "images/scenarios/Zola.webp",
       "thumbs": {
         "400": "thumbs/400/scenarios/Zola.webp",
         "800": "thumbs/800/scenarios/Zola.webp"
@@ -168,7 +167,7 @@
     {
       "id": "absorption-electrique",
       "name": "Absorption électrique",
-      "image": "images/modules/Absorption électrique.jpg",
+      "image": "images/modules/Absorption électrique.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Absorption électrique.webp",
         "800": "thumbs/800/modules/Absorption électrique.webp"
@@ -177,7 +176,7 @@
     {
       "id": "alerte-a-la-bombe",
       "name": "Alerte à la bombe",
-      "image": "images/modules/Alerte à la bombe.jpg",
+      "image": "images/modules/Alerte à la bombe.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Alerte à la bombe.webp",
         "800": "thumbs/800/modules/Alerte à la bombe.webp"
@@ -186,7 +185,7 @@
     {
       "id": "anachronautes",
       "name": "Anachronautes",
-      "image": "images/modules/Anachronautes.jpg",
+      "image": "images/modules/Anachronautes.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Anachronautes.webp",
         "800": "thumbs/800/modules/Anachronautes.webp"
@@ -195,7 +194,7 @@
     {
       "id": "armes-experimentales",
       "name": "Armes expérimentales",
-      "image": "images/modules/Armes expérimentales.jpg",
+      "image": "images/modules/Armes expérimentales.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Armes expérimentales.webp",
         "800": "thumbs/800/modules/Armes expérimentales.webp"
@@ -204,7 +203,7 @@
     {
       "id": "artefacts-galatiques",
       "name": "Artefacts galatiques",
-      "image": "images/modules/Artefacts galatiques.jpg",
+      "image": "images/modules/Artefacts galatiques.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Artefacts galatiques.webp",
         "800": "thumbs/800/modules/Artefacts galatiques.webp"
@@ -213,7 +212,7 @@
     {
       "id": "civils-attaques",
       "name": "Civils attaqués",
-      "image": "images/modules/Civils attaqués.jpg",
+      "image": "images/modules/Civils attaqués.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Civils attaqués.webp",
         "800": "thumbs/800/modules/Civils attaqués.webp"
@@ -222,7 +221,7 @@
     {
       "id": "controles-du-vaisseau",
       "name": "Contrôles du vaisseau",
-      "image": "images/modules/Contrôles du vaisseau.jpg",
+      "image": "images/modules/Contrôles du vaisseau.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Contrôles du vaisseau.webp",
         "800": "thumbs/800/modules/Contrôles du vaisseau.webp"
@@ -231,7 +230,7 @@
     {
       "id": "creatures-de-la-menagerie",
       "name": "Créatures de la ménagerie",
-      "image": "images/modules/Créatures de la ménagerie.jpg",
+      "image": "images/modules/Créatures de la ménagerie.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Créatures de la ménagerie.webp",
         "800": "thumbs/800/modules/Créatures de la ménagerie.webp"
@@ -240,7 +239,7 @@
     {
       "id": "defis",
       "name": "Défis",
-      "image": "images/modules/Défis.jpg",
+      "image": "images/modules/Défis.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Défis.webp",
         "800": "thumbs/800/modules/Défis.webp"
@@ -249,7 +248,7 @@
     {
       "id": "explosion-au-raft",
       "name": "Explosion au raft",
-      "image": "images/modules/Explosion au raft.jpg",
+      "image": "images/modules/Explosion au raft.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Explosion au raft.webp",
         "800": "thumbs/800/modules/Explosion au raft.webp"
@@ -258,7 +257,7 @@
     {
       "id": "fanatique-kree",
       "name": "Fanatique Kree",
-      "image": "images/modules/Fanatique Kree.jpg",
+      "image": "images/modules/Fanatique Kree.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Fanatique Kree.webp",
         "800": "thumbs/800/modules/Fanatique Kree.webp"
@@ -267,7 +266,7 @@
     {
       "id": "gadgets-du-bouffon",
       "name": "Gadgets du Bouffon",
-      "image": "images/modules/Gadgets du Bouffon.jpg",
+      "image": "images/modules/Gadgets du Bouffon.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Gadgets du Bouffon.webp",
         "800": "thumbs/800/modules/Gadgets du Bouffon.webp"
@@ -276,7 +275,7 @@
     {
       "id": "hommes-de-main",
       "name": "Hommes de main",
-      "image": "images/modules/Hommes de main.jpg",
+      "image": "images/modules/Hommes de main.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Hommes de main.webp",
         "800": "thumbs/800/modules/Hommes de main.webp"
@@ -285,7 +284,7 @@
     {
       "id": "ingerence-en-cours",
       "name": "Ingérence en cours",
-      "image": "images/modules/Ingérence en cours.jpg",
+      "image": "images/modules/Ingérence en cours.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Ingérence en cours.webp",
         "800": "thumbs/800/modules/Ingérence en cours.webp"
@@ -294,7 +293,7 @@
     {
       "id": "kang-expert",
       "name": "Kang expert",
-      "image": "images/modules/Kang expert.jpg",
+      "image": "images/modules/Kang expert.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Kang expert.webp",
         "800": "thumbs/800/modules/Kang expert.webp"
@@ -303,7 +302,7 @@
     {
       "id": "le-siege-de-l-apocalypse",
       "name": "Le siège de l'Apocalypse",
-      "image": "images/modules/Le siège de l'Apocalypse.jpg",
+      "image": "images/modules/Le siège de l'Apocalypse.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Le siège de l'Apocalypse.webp",
         "800": "thumbs/800/modules/Le siège de l'Apocalypse.webp"
@@ -312,7 +311,7 @@
     {
       "id": "legions-d-hydra",
       "name": "Légions d'Hydra",
-      "image": "images/modules/Légions d'Hydra.jpg",
+      "image": "images/modules/Légions d'Hydra.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Légions d'Hydra.webp",
         "800": "thumbs/800/modules/Légions d'Hydra.webp"
@@ -321,7 +320,7 @@
     {
       "id": "les-maitres-du-mal",
       "name": "Les maîtres du mal",
-      "image": "images/modules/Les maîtres du mal.jpg",
+      "image": "images/modules/Les maîtres du mal.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Les maîtres du mal.webp",
         "800": "thumbs/800/modules/Les maîtres du mal.webp"
@@ -330,7 +329,7 @@
     {
       "id": "maitre-du-temps",
       "name": "Maître du temps",
-      "image": "images/modules/Maître du temps.jpg",
+      "image": "images/modules/Maître du temps.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Maître du temps.webp",
         "800": "thumbs/800/modules/Maître du temps.webp"
@@ -339,7 +338,7 @@
     {
       "id": "maitrise-des-armes",
       "name": "Maîtrise des armes",
-      "image": "images/modules/Maîtrise des armes.jpg",
+      "image": "images/modules/Maîtrise des armes.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Maîtrise des armes.webp",
         "800": "thumbs/800/modules/Maîtrise des armes.webp"
@@ -348,7 +347,7 @@
     {
       "id": "milice-kree",
       "name": "Milice Kree",
-      "image": "images/modules/Milice Kree.jpg",
+      "image": "images/modules/Milice Kree.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Milice Kree.webp",
         "800": "thumbs/800/modules/Milice Kree.webp"
@@ -357,7 +356,7 @@
     {
       "id": "offensive-d-hydra",
       "name": "Offensive d'Hydra",
-      "image": "images/modules/Offensive d'Hydra.jpg",
+      "image": "images/modules/Offensive d'Hydra.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Offensive d'Hydra.webp",
         "800": "thumbs/800/modules/Offensive d'Hydra.webp"
@@ -366,7 +365,7 @@
     {
       "id": "patrouille-d-hydra",
       "name": "Patrouille d'hydra",
-      "image": "images/modules/Patrouille d'hydra.jpg",
+      "image": "images/modules/Patrouille d'hydra.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Patrouille d'hydra.webp",
         "800": "thumbs/800/modules/Patrouille d'hydra.webp"
@@ -375,7 +374,7 @@
     {
       "id": "pierre-du-pouvoir",
       "name": "Pierre du pouvoir",
-      "image": "images/modules/Pierre du pouvoir.jpg",
+      "image": "images/modules/Pierre du pouvoir.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Pierre du pouvoir.webp",
         "800": "thumbs/800/modules/Pierre du pouvoir.webp"
@@ -384,7 +383,7 @@
     {
       "id": "pirates-de-l-espace",
       "name": "Pirates de l'espace",
-      "image": "images/modules/Pirates de l'espace.jpg",
+      "image": "images/modules/Pirates de l'espace.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Pirates de l'espace.webp",
         "800": "thumbs/800/modules/Pirates de l'espace.webp"
@@ -393,7 +392,7 @@
     {
       "id": "temporel",
       "name": "Temporel",
-      "image": "images/modules/Temporel.jpg",
+      "image": "images/modules/Temporel.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Temporel.webp",
         "800": "thumbs/800/modules/Temporel.webp"
@@ -402,7 +401,7 @@
     {
       "id": "traqueur-badoon",
       "name": "Traqueur Badoon",
-      "image": "images/modules/Traqueur Badoon.jpg",
+      "image": "images/modules/Traqueur Badoon.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Traqueur Badoon.webp",
         "800": "thumbs/800/modules/Traqueur Badoon.webp"
@@ -411,7 +410,7 @@
     {
       "id": "troupe-de-badoon",
       "name": "Troupe de Badoon",
-      "image": "images/modules/Troupe de Badoon.jpg",
+      "image": "images/modules/Troupe de Badoon.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Troupe de Badoon.webp",
         "800": "thumbs/800/modules/Troupe de Badoon.webp"
@@ -420,7 +419,7 @@
     {
       "id": "un-immense-gachis",
       "name": "Un immense gâchis",
-      "image": "images/modules/Un immense gâchis.jpg",
+      "image": "images/modules/Un immense gâchis.webp",
       "thumbs": {
         "400": "thumbs/400/modules/Un immense gâchis.webp",
         "800": "thumbs/800/modules/Un immense gâchis.webp"
@@ -431,7 +430,7 @@
     {
       "id": "ant-man",
       "name": "Ant-Man",
-      "image": "images/heros/Ant-Man.jpg",
+      "image": "images/heros/Ant-Man.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Ant-Man.webp",
         "800": "thumbs/800/heros/Ant-Man.webp"
@@ -440,7 +439,7 @@
     {
       "id": "black-cat",
       "name": "Black Cat",
-      "image": "images/heros/Black Cat.jpg",
+      "image": "images/heros/Black Cat.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Black Cat.webp",
         "800": "thumbs/800/heros/Black Cat.webp"
@@ -449,7 +448,7 @@
     {
       "id": "black-panther",
       "name": "Black Panther",
-      "image": "images/heros/Black Panther.jpg",
+      "image": "images/heros/Black Panther.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Black Panther.webp",
         "800": "thumbs/800/heros/Black Panther.webp"
@@ -458,7 +457,7 @@
     {
       "id": "black-widow",
       "name": "Black Widow",
-      "image": "images/heros/Black Widow.jpg",
+      "image": "images/heros/Black Widow.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Black Widow.webp",
         "800": "thumbs/800/heros/Black Widow.webp"
@@ -467,7 +466,7 @@
     {
       "id": "captain-america",
       "name": "Captain America",
-      "image": "images/heros/Captain America.jpg",
+      "image": "images/heros/Captain America.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Captain America.webp",
         "800": "thumbs/800/heros/Captain America.webp"
@@ -476,7 +475,7 @@
     {
       "id": "captain-marvel",
       "name": "Captain Marvel",
-      "image": "images/heros/Captain Marvel.jpg",
+      "image": "images/heros/Captain Marvel.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Captain Marvel.webp",
         "800": "thumbs/800/heros/Captain Marvel.webp"
@@ -485,7 +484,7 @@
     {
       "id": "docteur-strange",
       "name": "Docteur Strange",
-      "image": "images/heros/Docteur Strange.jpg",
+      "image": "images/heros/Docteur Strange.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Docteur Strange.webp",
         "800": "thumbs/800/heros/Docteur Strange.webp"
@@ -494,7 +493,7 @@
     {
       "id": "drax",
       "name": "Drax",
-      "image": "images/heros/Drax.jpg",
+      "image": "images/heros/Drax.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Drax.webp",
         "800": "thumbs/800/heros/Drax.webp"
@@ -503,7 +502,7 @@
     {
       "id": "gamora",
       "name": "Gamora",
-      "image": "images/heros/Gamora.jpg",
+      "image": "images/heros/Gamora.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Gamora.webp",
         "800": "thumbs/800/heros/Gamora.webp"
@@ -512,7 +511,7 @@
     {
       "id": "groot",
       "name": "Groot",
-      "image": "images/heros/Groot.jpg",
+      "image": "images/heros/Groot.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Groot.webp",
         "800": "thumbs/800/heros/Groot.webp"
@@ -521,7 +520,7 @@
     {
       "id": "hawkeye",
       "name": "Hawkeye",
-      "image": "images/heros/Hawkeye.jpg",
+      "image": "images/heros/Hawkeye.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Hawkeye.webp",
         "800": "thumbs/800/heros/Hawkeye.webp"
@@ -530,7 +529,7 @@
     {
       "id": "hulk",
       "name": "Hulk",
-      "image": "images/heros/Hulk.jpg",
+      "image": "images/heros/Hulk.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Hulk.webp",
         "800": "thumbs/800/heros/Hulk.webp"
@@ -539,7 +538,7 @@
     {
       "id": "iron-man",
       "name": "Iron Man",
-      "image": "images/heros/Iron Man.jpg",
+      "image": "images/heros/Iron Man.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Iron Man.webp",
         "800": "thumbs/800/heros/Iron Man.webp"
@@ -548,7 +547,7 @@
     {
       "id": "la-guepe",
       "name": "La Guêpe",
-      "image": "images/heros/La Guêpe.jpg",
+      "image": "images/heros/La Guêpe.webp",
       "thumbs": {
         "400": "thumbs/400/heros/La Guêpe.webp",
         "800": "thumbs/800/heros/La Guêpe.webp"
@@ -557,7 +556,7 @@
     {
       "id": "miss-hulk",
       "name": "Miss Hulk",
-      "image": "images/heros/Miss Hulk.jpg",
+      "image": "images/heros/Miss Hulk.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Miss Hulk.webp",
         "800": "thumbs/800/heros/Miss Hulk.webp"
@@ -566,7 +565,7 @@
     {
       "id": "miss-marvel",
       "name": "Miss Marvel",
-      "image": "images/heros/Miss Marvel.jpg",
+      "image": "images/heros/Miss Marvel.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Miss Marvel.webp",
         "800": "thumbs/800/heros/Miss Marvel.webp"
@@ -575,7 +574,7 @@
     {
       "id": "rocket-racoon",
       "name": "Rocket Racoon",
-      "image": "images/heros/Rocket Racoon.jpg",
+      "image": "images/heros/Rocket Racoon.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Rocket Racoon.webp",
         "800": "thumbs/800/heros/Rocket Racoon.webp"
@@ -584,7 +583,7 @@
     {
       "id": "sorciere-rouge",
       "name": "Sorcière rouge",
-      "image": "images/heros/Sorcière rouge.jpg",
+      "image": "images/heros/Sorcière rouge.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Sorcière rouge.webp",
         "800": "thumbs/800/heros/Sorcière rouge.webp"
@@ -593,7 +592,7 @@
     {
       "id": "spider-man",
       "name": "Spider Man",
-      "image": "images/heros/Spider Man.jpg",
+      "image": "images/heros/Spider Man.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Spider Man.webp",
         "800": "thumbs/800/heros/Spider Man.webp"
@@ -602,7 +601,7 @@
     {
       "id": "spider-woman",
       "name": "Spider-Woman",
-      "image": "images/heros/Spider-Woman.jpg",
+      "image": "images/heros/Spider-Woman.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Spider-Woman.webp",
         "800": "thumbs/800/heros/Spider-Woman.webp"
@@ -611,7 +610,7 @@
     {
       "id": "starlord",
       "name": "Starlord",
-      "image": "images/heros/Starlord.jpg",
+      "image": "images/heros/Starlord.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Starlord.webp",
         "800": "thumbs/800/heros/Starlord.webp"
@@ -620,7 +619,7 @@
     {
       "id": "thor",
       "name": "Thor",
-      "image": "images/heros/Thor.jpg",
+      "image": "images/heros/Thor.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Thor.webp",
         "800": "thumbs/800/heros/Thor.webp"
@@ -629,7 +628,7 @@
     {
       "id": "venom",
       "name": "Venom",
-      "image": "images/heros/Venom.jpg",
+      "image": "images/heros/Venom.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Venom.webp",
         "800": "thumbs/800/heros/Venom.webp"
@@ -638,7 +637,7 @@
     {
       "id": "vif-argent",
       "name": "Vif-argent",
-      "image": "images/heros/Vif-argent.jpg",
+      "image": "images/heros/Vif-argent.webp",
       "thumbs": {
         "400": "thumbs/400/heros/Vif-argent.webp",
         "800": "thumbs/800/heros/Vif-argent.webp"
@@ -649,7 +648,7 @@
     {
       "id": "standard",
       "name": "Standard",
-      "image": "images/modes/Standard.jpg",
+      "image": "images/modes/Standard.webp",
       "thumbs": {
         "400": "thumbs/400/modes/Standard.webp",
         "800": "thumbs/800/modes/Standard.webp"
@@ -658,7 +657,7 @@
     {
       "id": "expert",
       "name": "Expert",
-      "image": "images/modes/Expert.jpg",
+      "image": "images/modes/Expert.webp",
       "thumbs": {
         "400": "thumbs/400/modes/Expert.webp",
         "800": "thumbs/800/modes/Expert.webp"
@@ -669,7 +668,7 @@
     {
       "id": "agressivite",
       "name": "Agressivité",
-      "image": "images/affinites/Agressivité.jpg",
+      "image": "images/affinites/Agressivité.webp",
       "thumbs": {
         "400": "thumbs/400/affinites/Agressivité.webp",
         "800": "thumbs/800/affinites/Agressivité.webp"
@@ -678,7 +677,7 @@
     {
       "id": "commandement",
       "name": "Commandement",
-      "image": "images/affinites/Commandement.jpg",
+      "image": "images/affinites/Commandement.webp",
       "thumbs": {
         "400": "thumbs/400/affinites/Commandement.webp",
         "800": "thumbs/800/affinites/Commandement.webp"
@@ -687,7 +686,7 @@
     {
       "id": "justice",
       "name": "Justice",
-      "image": "images/affinites/Justice.jpg",
+      "image": "images/affinites/Justice.webp",
       "thumbs": {
         "400": "thumbs/400/affinites/Justice.webp",
         "800": "thumbs/800/affinites/Justice.webp"
@@ -696,7 +695,7 @@
     {
       "id": "protection",
       "name": "Protection",
-      "image": "images/affinites/Protection.jpg",
+      "image": "images/affinites/Protection.webp",
       "thumbs": {
         "400": "thumbs/400/affinites/Protection.webp",
         "800": "thumbs/800/affinites/Protection.webp"

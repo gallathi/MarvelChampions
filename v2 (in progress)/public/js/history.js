@@ -1,21 +1,25 @@
 // Historique des parties jouées et statistiques (fonctions pures + persistance).
 
-const KEY = 'mc-generator/v2/history';
+export const HISTORY_KEY = 'mc-generator/v2/history';
 const MAX_ENTRIES = 1000;
 
 export const RESULTS = ['win', 'loss'];
 
-export function loadHistory() {
+/** Historique stocké, ou null si le stockage est vide ou inaccessible. */
+export function readStoredHistory() {
   try {
-    return sanitizeHistory(JSON.parse(localStorage.getItem(KEY) ?? '[]'));
+    const raw = localStorage.getItem(HISTORY_KEY);
+    return raw === null ? null : sanitizeHistory(JSON.parse(raw));
   } catch {
-    return [];
+    return null;
   }
 }
 
+export const loadHistory = () => readStoredHistory() ?? [];
+
 export function saveHistory(history) {
   try {
-    localStorage.setItem(KEY, JSON.stringify(history.slice(0, MAX_ENTRIES)));
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, MAX_ENTRIES)));
   } catch {
     // stockage plein ou indisponible : l'historique reste en mémoire pour la session
   }

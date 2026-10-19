@@ -1,8 +1,8 @@
 // État persistant de l'application (localStorage, plus de cookies).
 
-import { COLLECTABLE, MAX_MODULES, MAX_PLAYERS } from './config.js';
+import { COLLECTABLE, MAX_MODULES, MAX_PLAYERS, knownValues } from './config.js';
 
-const KEY = 'mc-generator/v2';
+export const STATE_KEY = 'mc-generator/v2';
 
 export function defaultState() {
   return {
@@ -20,34 +20,41 @@ export function defaultState() {
 
 const clamp = (n, min, max) => Math.min(max, Math.max(min, Number.parseInt(n, 10) || min));
 
-function sanitize(raw) {
-  const base = defaultState();
-  const state = { ...base, ...raw };
+/**
+ * Valide un état lu depuis le stockage. Les identifiants absents du catalogue (image renommée
+ * ou retirée depuis la dernière visite) sont écartés : sinon l'écran Partie ne peut pas s'afficher.
+ */
+export function sanitize(raw, content) {
+  const state = { ...defaultState(), ...raw };
   state.players = clamp(state.players, 1, MAX_PLAYERS);
   state.moduleCount = clamp(state.moduleCount, 1, MAX_MODULES);
   state.uniqueAspects = state.uniqueAspects !== false;
   state.favorUnplayed = state.favorUnplayed === true;
-  state.excluded = Object.fromEntries(
-    COLLECTABLE.map((c) => [c, Array.isArray(raw?.excluded?.[c]) ? raw.excluded[c] : []]),
+  state.excluded = Object.fromEntries(COLLECTABLE.map((c) => [
+    c,
+    Array.isArray(raw?.excluded?.[c]) ? raw.excluded[c].filter((id) => typeof id === 'string') : [],
+  ]));
+  state.values = knownValues(raw?.values, content);
+  state.locked = Object.fromEntries(
+    Object.keys(state.values).filter((key) => raw?.locked?.[key] === true).map((key) => [key, true]),
   );
-  state.values = typeof state.values === 'object' && state.values ? state.values : {};
-  state.locked = typeof state.locked === 'object' && state.locked ? state.locked : {};
+  state.lastSaved = typeof raw?.lastSaved === 'string' ? raw.lastSaved : null;
   return state;
 }
 
 export function loadState(content) {
   try {
-    const saved = localStorage.getItem(KEY);
-    if (saved) return sanitize(JSON.parse(saved));
+    const saved = localStorage.getItem(STATE_KEY);
+    if (saved) return sanitize(JSON.parse(saved), content);
   } catch {
-    // stockage indisponible (navigation privée...) : on repart des valeurs par défaut
+    // stockage indisponible (navigation privée...) ou contenu illisible : valeurs par défaut
   }
   return importV1Cookies(content) ?? defaultState();
 }
 
 export function saveState(state) {
   try {
-    localStorage.setItem(KEY, JSON.stringify(state));
+    localStorage.setItem(STATE_KEY, JSON.stringify(state));
   } catch {
     // pas de persistance possible, l'appli reste utilisable
   }

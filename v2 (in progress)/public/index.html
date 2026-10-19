@@ -65,6 +65,18 @@
 
   <div id="toasts" class="toasts"></div>
 
+  <dialog id="confirm-dialog" class="dialog" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+    <form method="dialog" class="dialog__body">
+      <h2 id="confirm-title" class="dialog__title"></h2>
+      <p id="confirm-message" class="dialog__message"></p>
+      <ul class="dialog__details"></ul>
+      <div class="dialog__actions">
+        <button type="submit" value="cancel" class="btn btn--ghost" data-role="cancel"></button>
+        <button type="submit" value="confirm" class="btn btn--primary" data-role="confirm"></button>
+      </div>
+    </form>
+  </dialog>
+
   <dialog id="share-dialog" class="dialog" aria-labelledby="share-title">
     <div class="dialog__body">
       <h2 id="share-title" class="dialog__title">Partager la partie</h2>
