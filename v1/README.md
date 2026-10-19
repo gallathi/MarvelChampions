@@ -107,5 +107,5 @@ La v1 était hébergée sur **Azure App Service** (Windows/PHP), avec le contenu
 
 ## Crédits
 
-- Illustrations des intercalaires : un grand merci à **Stéphane Jarny** pour son [travail d'illustration](https://drive.google.com/drive/folders/1ZIDEIVUde8r_cukUIVEclr7lOi2zq_zP?usp=sharing).
+- Illustrations des intercalaires : un grand merci à **Stéphane Jarny** pour son travail d'illustration.
 - *Marvel Champions: The Card Game* est un jeu © Fantasy Flight Games / Marvel. Ce projet est une création de fan, sans but commercial ni lien officiel avec eux.

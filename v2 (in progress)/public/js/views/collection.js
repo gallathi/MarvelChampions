@@ -13,6 +13,7 @@ function segmented(name, legend, max, current) {
     <fieldset class="segmented">
       <legend class="field-label">${legend}</legend>
       <div class="segmented__options">
+        <span class="segmented__indicator" aria-hidden="true"></span>
         ${range(max).map((n) => `
           <label class="segmented__option">
             <input type="radio" name="${name}" value="${n}" ${n === current ? 'checked' : ''}>
@@ -181,6 +182,36 @@ export function renderCollection(root, app, signal) {
     }
     refresh();
   }, { signal });
+
+  // Sliders : on peut aussi faire glisser la pastille du doigt ou à la souris
+  for (const track of root.querySelectorAll('.segmented__options')) {
+    const options = [...track.querySelectorAll('.segmented__option')];
+    const pick = (x) => {
+      const target = options.find((o) => x < o.getBoundingClientRect().right) ?? options.at(-1);
+      const input = target.querySelector('input');
+      if (!input.checked) {
+        input.checked = true;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    };
+    track.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      track.setPointerCapture(event.pointerId);
+      track.classList.add('is-dragging');
+    }, { signal });
+    track.addEventListener('pointermove', (event) => {
+      if (track.hasPointerCapture(event.pointerId)) pick(event.clientX);
+    }, { signal });
+    const stop = (event) => {
+      if (track.hasPointerCapture(event.pointerId)) {
+        pick(event.clientX);
+        track.releasePointerCapture(event.pointerId);
+      }
+      track.classList.remove('is-dragging');
+    };
+    track.addEventListener('pointerup', stop, { signal });
+    track.addEventListener('pointercancel', stop, { signal });
+  }
 
   root.querySelector('.search__input').addEventListener('input', (event) => {
     const query = normalize(event.target.value.trim());

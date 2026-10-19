@@ -12,8 +12,8 @@ import { renderHistory } from './views/history.js';
 
 const root = document.getElementById('view');
 const VIEWS = {
-  collection: { render: renderCollection, title: 'Ma collection' },
-  game: { render: renderGame, title: 'La partie' },
+  collection: { render: renderCollection, title: 'Collection' },
+  game: { render: renderGame, title: 'Partie' },
   history: { render: renderHistory, title: 'Historique' },
 };
 const ORDER = Object.keys(VIEWS);
@@ -62,7 +62,7 @@ function createApp(content) {
       saveHistory(history);
       this.refreshNav();
       window.dispatchEvent(new CustomEvent('history-change'));
-      announceAchievements(newlyUnlocked(before, history));
+      announceAchievements(newlyUnlocked(before, history, { heroes: this.pools().heroes }));
     },
     item: (cat, id) => index[cat].get(id),
     slots: () => buildSlots(state),
@@ -118,7 +118,7 @@ function announceAchievements(unlocked) {
   unlocked.forEach((a, i) => {
     setTimeout(() => {
       toast(`🏅 Succès débloqué : ${a.title}`, 'success', { duration: 4500 });
-      if (i === 0) comicBurst('SUCCÈS !');
+      if (i === 0) comicBurst(unlocked.some((u) => u.meta) ? 'LÉGENDAIRE !' : 'SUCCÈS !');
     }, 1100 + i * 600);
   });
 }
@@ -202,7 +202,7 @@ new ResizeObserver(() => placeIndicator({ animate: false })).observe(document.qu
 let touch = null;
 root.addEventListener('touchstart', (event) => {
   const t = event.touches[0];
-  touch = event.touches.length === 1 && !event.target.closest('input, select, textarea, dialog')
+  touch = event.touches.length === 1 && !event.target.closest('input, select, textarea, dialog, .segmented')
     ? { x: t.clientX, y: t.clientY, time: Date.now() }
     : null;
 }, { passive: true });

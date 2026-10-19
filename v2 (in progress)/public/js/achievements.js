@@ -86,6 +86,18 @@ export const ACHIEVEMENTS = [
     progress: (h) => distinct(h.flatMap((g) => g.heroes.map((x) => x.aspect))),
   },
   {
+    id: 'grand-rassemblement',
+    title: 'Le grand rassemblement',
+    description: 'Jouer tous les héros de votre collection',
+    icon: 'star',
+    // la cible dépend de la collection : ctx.heroes = identifiants des héros possédés
+    target: (ctx) => Math.max(1, ctx.heroes?.length ?? 0),
+    progress: (h, ctx) => {
+      const played = new Set(h.flatMap((g) => g.heroes.map((x) => x.hero)));
+      return (ctx.heroes ?? []).filter((id) => played.has(id)).length;
+    },
+  },
+  {
     id: 'revanche',
     title: 'La revanche',
     description: 'Battre un méchant qui vous avait vaincu',
@@ -93,21 +105,38 @@ export const ACHIEVEMENTS = [
     target: 1,
     progress: revenge,
   },
+  {
+    // Succès ultime : sa progression dépend des autres, calculée dans evaluateAchievements
+    id: 'champion-des-champions',
+    title: 'Marvel Champion',
+    description: 'Débloquer tous les autres succès',
+    icon: 'medal',
+    meta: true,
+  },
 ];
 
-/** État de chaque succès : { ...succès, value, done }. */
-export function evaluateAchievements(history) {
-  return ACHIEVEMENTS.map((a) => {
-    const value = Math.min(a.target, a.progress(history));
-    return { ...a, value, done: value >= a.target };
+/**
+ * État de chaque succès : { ...succès, target, value, done }.
+ * `ctx.heroes` : héros de la collection (pour « Le grand rassemblement »).
+ */
+export function evaluateAchievements(history, ctx = {}) {
+  const regular = ACHIEVEMENTS.filter((a) => !a.meta).map((a) => {
+    const target = typeof a.target === 'function' ? a.target(ctx) : a.target;
+    const value = Math.min(target, a.progress(history, ctx));
+    return { ...a, target, value, done: value >= target };
   });
+  const unlocked = regular.filter((a) => a.done).length;
+  const meta = ACHIEVEMENTS.filter((a) => a.meta).map((a) => ({
+    ...a, target: regular.length, value: unlocked, done: unlocked === regular.length,
+  }));
+  return [...regular, ...meta];
 }
 
-export const unlockedIds = (history) =>
-  new Set(evaluateAchievements(history).filter((a) => a.done).map((a) => a.id));
+export const unlockedIds = (history, ctx = {}) =>
+  new Set(evaluateAchievements(history, ctx).filter((a) => a.done).map((a) => a.id));
 
 /** Succès débloqués entre deux versions de l'historique. */
-export function newlyUnlocked(before, after) {
-  const was = unlockedIds(before);
-  return evaluateAchievements(after).filter((a) => a.done && !was.has(a.id));
+export function newlyUnlocked(before, after, ctx = {}) {
+  const was = unlockedIds(before, ctx);
+  return evaluateAchievements(after, ctx).filter((a) => a.done && !was.has(a.id));
 }

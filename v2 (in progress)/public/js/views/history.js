@@ -121,7 +121,7 @@ export function renderHistory(root, app, signal) {
   }
 
   function achievementsHtml() {
-    const states = evaluateAchievements(app.history);
+    const states = evaluateAchievements(app.history, { heroes: app.pools().heroes });
     const done = states.filter((a) => a.done).length;
     return `
       <section class="zone" aria-labelledby="achievements-title">
@@ -129,7 +129,7 @@ export function renderHistory(root, app, signal) {
           <span class="zone__count">${done} / ${states.length}</span></h2>
         <ul class="achievements">
           ${states.map((a, i) => `
-            <li class="achievement ${a.done ? 'is-done' : ''}" ${stagger(i)}>
+            <li class="achievement ${a.done ? 'is-done' : ''} ${a.meta ? 'achievement--meta' : ''}" ${stagger(i)}>
               <span class="achievement__badge" aria-hidden="true">${icons[a.icon]}</span>
               <div class="achievement__body">
                 <span class="achievement__title">${esc(a.title)}</span>

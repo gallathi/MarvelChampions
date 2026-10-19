@@ -33,5 +33,5 @@ Publiez le dossier `public/` sur n'importe quel hébergeur statique (GitHub Page
 
 ## Crédits
 
-Illustrations des intercalaires : **Stéphane Jarny** ([travail d'illustration](https://drive.google.com/drive/folders/1ZIDEIVUde8r_cukUIVEclr7lOi2zq_zP?usp=sharing)).
+Illustrations des intercalaires : **Stéphane Jarny**.
 Projet de fan non officiel. *Marvel Champions: The Card Game* © Fantasy Flight Games / Marvel.
