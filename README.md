@@ -2,7 +2,7 @@
 
 Tirez au sort votre prochaine partie de *Marvel Champions* : méchant, modules, difficulté, héros et affinités, parmi le matériel que vous possédez.
 
-<a href="https://gallathi.github.io/MarvelChampions/"><img src=".github/readme/ouvrir-le-generateur.svg" alt="Ouvrir le générateur" width="320" height="60"></a>
+<a href="https://gallathi.github.io/MarvelChampions/"><img src=".github/readme/ouvrir-le-generateur.svg" alt="Ouvrir le générateur" width="264" height="48"></a>
 
 ## Versions
 
