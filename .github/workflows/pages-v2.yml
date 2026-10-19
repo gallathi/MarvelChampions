@@ -3,38 +3,42 @@ name: Deploy v2 to Pages
 on:
   push:
     branches: [main]
-    paths: ['v2/**']
+    paths:
+      - 'v2/**'
+      - '.github/workflows/pages-v2.yml'
   workflow_dispatch:
-  
+
 permissions:
   contents: read
   pages: write
   id-token: write
-  
+
 concurrency:
   group: pages
-  cancel-in-progress: true
-  
+  cancel-in-progress: false
+
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      # Disable Jekyll processing (keeps _files / _folders)
-      - run: touch "v2/.nojekyll"
-      - uses: actions/configure-pages@v5
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
-      - run: npm ci
-        working-directory: 'v2'
-      - run: npm run build
-        working-directory: 'v2'
-      - uses: actions/upload-pages-artifact@v3
+          node-version: 24
+
+      - name: Tests
+        run: npm test
+        working-directory: v2
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
         with:
-          path: 'v2/dist'
+          path: v2/public
+
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
