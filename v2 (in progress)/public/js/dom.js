@@ -63,6 +63,24 @@ export function comicBurst(word = BURST_WORDS[Math.floor(Math.random() * BURST_W
   el.innerHTML = `<span class="burst__text">${esc(word)}</span>`;
   el.style.setProperty('--tilt', `${Math.round(Math.random() * 16 - 8)}deg`);
   document.body.append(el);
+
+  // Les mots longs (« RASSEMBLEMENT ! ») doivent tenir sur une ligne, même sur téléphone.
+  const text = el.firstElementChild;
+  const size = parseFloat(getComputedStyle(text).fontSize);
+  const range = document.createRange();
+  range.selectNodeContents(text);
+  text.style.animation = 'none'; // mesure sans le zoom de départ de l'animation
+  const glyphs = range.getBoundingClientRect().width;
+  text.style.animation = '';
+  // Les branches de l'étoile mordent 16 % de chaque côté : marge d'au moins 25 % de la largeur du mot
+  const padding = Math.max(1.4 * size, 0.25 * glyphs);
+  text.style.paddingInline = `${padding / size}em`;
+  // … et plus de hauteur pour que l'étoile ne s'aplatisse pas sur les mots longs
+  text.style.paddingBlock = `${Math.max(size, 0.2 * glyphs) / size}em`;
+  // L'animation grossit l'étoile jusqu'à ×1,12 : on vise 84 % de la largeur d'écran
+  const maxWidth = window.innerWidth * 0.84;
+  const width = glyphs + 2 * padding;
+  if (width > maxWidth) text.style.fontSize = `${size * (maxWidth / width)}px`;
   el.addEventListener('animationend', () => el.remove(), { once: true });
   setTimeout(() => el.remove(), 1500);
 }
