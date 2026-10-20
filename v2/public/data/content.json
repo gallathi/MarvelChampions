@@ -345,12 +345,12 @@
       }
     },
     {
-      "id": "milice-kree",
-      "name": "Milice Kree",
-      "image": "images/modules/Milice Kree.webp",
+      "id": "milices-kree",
+      "name": "Milices Kree",
+      "image": "images/modules/Milices Kree.webp",
       "thumbs": {
-        "400": "thumbs/400/modules/Milice Kree.webp",
-        "800": "thumbs/800/modules/Milice Kree.webp"
+        "400": "thumbs/400/modules/Milices Kree.webp",
+        "800": "thumbs/800/modules/Milices Kree.webp"
       }
     },
     {
@@ -699,6 +699,62 @@
       "thumbs": {
         "400": "thumbs/400/affinites/Protection.webp",
         "800": "thumbs/800/affinites/Protection.webp"
+      }
+    }
+  ],
+  "extensions": [
+    {
+      "id": "boite-de-base",
+      "name": "boite-de-base",
+      "image": "images/extensions/boite-de-base.webp",
+      "thumbs": {
+        "400": "thumbs/400/extensions/boite-de-base.webp",
+        "800": "thumbs/800/extensions/boite-de-base.webp"
+      }
+    },
+    {
+      "id": "convoitise-galactique",
+      "name": "convoitise-galactique",
+      "image": "images/extensions/convoitise-galactique.webp",
+      "thumbs": {
+        "400": "thumbs/400/extensions/convoitise-galactique.webp",
+        "800": "thumbs/800/extensions/convoitise-galactique.webp"
+      }
+    },
+    {
+      "id": "crane-rouge",
+      "name": "crane-rouge",
+      "image": "images/extensions/crane-rouge.webp",
+      "thumbs": {
+        "400": "thumbs/400/extensions/crane-rouge.webp",
+        "800": "thumbs/800/extensions/crane-rouge.webp"
+      }
+    },
+    {
+      "id": "kang",
+      "name": "kang",
+      "image": "images/extensions/kang.webp",
+      "thumbs": {
+        "400": "thumbs/400/extensions/kang.webp",
+        "800": "thumbs/800/extensions/kang.webp"
+      }
+    },
+    {
+      "id": "le-bouffon-vert",
+      "name": "le-bouffon-vert",
+      "image": "images/extensions/le-bouffon-vert.webp",
+      "thumbs": {
+        "400": "thumbs/400/extensions/le-bouffon-vert.webp",
+        "800": "thumbs/800/extensions/le-bouffon-vert.webp"
+      }
+    },
+    {
+      "id": "les-demolisseurs",
+      "name": "les-demolisseurs",
+      "image": "images/extensions/les-demolisseurs.webp",
+      "thumbs": {
+        "400": "thumbs/400/extensions/les-demolisseurs.webp",
+        "800": "thumbs/800/extensions/les-demolisseurs.webp"
       }
     }
   ]

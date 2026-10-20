@@ -1,12 +1,13 @@
-// Étape 2 : le tirage de la partie.
+// Étape 2 : réglage et tirage de la partie.
 
-import { ASPECT_COLORS, CATEGORIES } from '../config.js';
+import { ASPECT_COLORS, CATEGORIES, MAX_MODULES, MAX_PLAYERS } from '../config.js';
 import { roll, takenValues, validatePools } from '../draw.js';
-import { bump, comicBurst, esc, reducedMotion, srcsetOf, stagger, thumbSrc, toast } from '../dom.js';
+import {
+  bindSegmented, bump, comicBurst, esc, reducedMotion, segmented, srcsetOf, stagger, thumbSrc, toast,
+} from '../dom.js';
 import { icons } from '../icons.js';
 import { shareUrl } from '../share.js';
 
-const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function slotLabel(slot) {
@@ -47,42 +48,30 @@ function slotHtml(slot) {
     </article>`;
 }
 
-export function renderGame(root, app, signal) {
-  const { state } = app;
-  const slots = app.slots();
-  const slotByKey = new Map(slots.map((s) => [s.key, s]));
+function setupHtml(state) {
+  return `
+    <div class="panel setup">
+      ${segmented('players', 'Joueurs', MAX_PLAYERS, state.players)}
+      ${segmented('moduleCount', 'Modules de rencontre', MAX_MODULES, state.moduleCount)}
+      <label class="switch">
+        <input type="checkbox" name="uniqueAspects" ${state.uniqueAspects ? 'checked' : ''}>
+        <span class="switch__track" aria-hidden="true"></span>
+        <span><span class="field-label">Affinités toutes différentes</span>
+          <span class="switch__hint">Deux joueurs ne peuvent pas avoir la même affinité</span></span>
+      </label>
+      <label class="switch">
+        <input type="checkbox" name="favorUnplayed" ${state.favorUnplayed ? 'checked' : ''}>
+        <span class="switch__track" aria-hidden="true"></span>
+        <span><span class="field-label">Favoriser les moins joués</span>
+          <span class="switch__hint">Héros et méchants rarement joués sortent plus souvent</span></span>
+      </label>
+    </div>`;
+}
 
-  // Nettoie les emplacements qui n'existent plus (nombre de joueurs/modules réduit)
-  app.update((s) => {
-    for (const key of Object.keys(s.values)) if (!slotByKey.has(key)) delete s.values[key];
-    for (const key of Object.keys(s.locked)) if (!slotByKey.has(key) || !s.values[key]) delete s.locked[key];
-  });
-
+function boardHtml(slots, players) {
   const of = (cat) => slots.filter((s) => s.category === cat);
   slotIndex = 0;
-  const players = of('heroes').map((hero) => ({ hero, aspect: slotByKey.get(`aspect-${hero.index}`) }));
-
-  root.innerHTML = `
-    <section class="view view--game" aria-labelledby="view-title">
-      <div class="intro intro--row">
-        <div>
-          <p class="eyebrow">Étape 2</p>
-          <h1 id="view-title" class="display" tabindex="-1">Votre partie</h1>
-          <p class="lead">${plural(state.players, 'joueur')} · ${plural(state.moduleCount, 'module')}.
-            Verrouillez ce que vous voulez garder, puis lancez les dés.</p>
-        </div>
-        <div class="toolbar">
-          <button type="button" class="btn btn--primary btn--lg" data-action="roll-all">${icons.dice} Tout tirer</button>
-          <button type="button" class="btn btn--gold" data-action="record">${icons.play} <span data-role="record-label">On joue !</span></button>
-          <div class="toolbar__secondary">
-            <button type="button" class="btn btn--ghost" data-action="reset" title="Réinitialiser">${icons.reset}<span class="btn__label">Réinitialiser</span></button>
-            <button type="button" class="btn btn--ghost" data-action="share" title="Partager">${icons.share}<span class="btn__label">Partager</span></button>
-          </div>
-        </div>
-      </div>
-
-      <div class="notice" data-role="problems" hidden></div>
-
+  return `
       <section class="zone" aria-labelledby="zone-villain">
         <h2 id="zone-villain" class="zone__title">Le méchant</h2>
         <div class="villain">
@@ -96,20 +85,67 @@ export function renderGame(root, app, signal) {
 
       <section class="zone" aria-labelledby="zone-heroes">
         <h2 id="zone-heroes" class="zone__title">Les héros</h2>
-        <div class="players players--${state.players}">
-          ${players.map(({ hero, aspect }) => `
+        <div class="players players--${players}">
+          ${of('heroes').map((hero) => `
             <article class="player">
               <header class="player__head">
                 <span class="player__num">${hero.index + 1}</span> Joueur ${hero.index + 1}
               </header>
-              <div class="player__slots">${slotHtml(hero)}${slotHtml(aspect)}</div>
+              <div class="player__slots">${slotHtml(hero)}${slotHtml(slots.find((s) => s.key === `aspect-${hero.index}`))}</div>
             </article>`).join('')}
         </div>
-      </section>
+      </section>`;
+}
+
+export function renderGame(root, app, signal) {
+  const { state } = app;
+  // Venir jusqu'ici une fois suffit : les visites suivantes ouvrent directement cet écran
+  if (!state.collectionReady) app.update((s) => { s.collectionReady = true; });
+
+  root.innerHTML = `
+    <section class="view view--game" aria-labelledby="view-title">
+      <div class="intro intro--row">
+        <div>
+          <p class="eyebrow">Étape 2</p>
+          <h1 id="view-title" class="display" tabindex="-1">Votre partie</h1>
+          <p class="lead">Réglez la table, verrouillez ce que vous voulez garder, puis lancez les dés.</p>
+        </div>
+        <div class="toolbar">
+          <button type="button" class="btn btn--primary btn--lg" data-action="roll-all">${icons.dice} Tout tirer</button>
+          <button type="button" class="btn btn--gold" data-action="record">${icons.play} <span data-role="record-label">On joue !</span></button>
+          <div class="toolbar__secondary">
+            <button type="button" class="btn btn--ghost" data-action="reset" title="Réinitialiser">${icons.reset}<span class="btn__label">Réinitialiser</span></button>
+            <button type="button" class="btn btn--ghost" data-action="share" title="Partager">${icons.share}<span class="btn__label">Partager</span></button>
+          </div>
+        </div>
+      </div>
+
+      ${setupHtml(state)}
+
+      <div class="notice" data-role="problems" hidden></div>
+
+      <div data-role="board"></div>
     </section>`;
 
   const view = root.querySelector('.view--game');
-  const slotEls = new Map([...root.querySelectorAll('.slot')].map((el) => [el.dataset.key, el]));
+  const board = root.querySelector('[data-role="board"]');
+  let slots;
+  let slotByKey;
+  let slotEls;
+
+  /** (Re)construit les emplacements selon le nombre de joueurs et de modules. */
+  function buildBoard() {
+    slots = app.slots();
+    slotByKey = new Map(slots.map((s) => [s.key, s]));
+    // Nettoie les emplacements qui n'existent plus (nombre de joueurs/modules réduit)
+    app.update((s) => {
+      for (const key of Object.keys(s.values)) if (!slotByKey.has(key)) delete s.values[key];
+      for (const key of Object.keys(s.locked)) if (!slotByKey.has(key) || !s.values[key]) delete s.locked[key];
+    });
+    board.innerHTML = boardHtml(slots, state.players);
+    slotEls = new Map([...board.querySelectorAll('.slot')].map((el) => [el.dataset.key, el]));
+  }
+  buildBoard();
   const playCounts = { heroes: app.playCounts('heroes'), scenarios: app.playCounts('scenarios') };
   let busy = false;
 
@@ -305,6 +341,26 @@ export function renderGame(root, app, signal) {
   }, { signal });
 
   root.addEventListener('change', (event) => {
+    const { name, value: setting, checked } = event.target;
+    if (name === 'players' || name === 'moduleCount') {
+      if (busy) { // tirage en cours : on garde le réglage actuel
+        root.querySelector(`[name="${name}"][value="${state[name]}"]`).checked = true;
+        return;
+      }
+      app.update((s) => { s[name] = Number(setting); });
+      buildBoard();
+      syncAll();
+      return;
+    }
+    if (name === 'uniqueAspects' || name === 'favorUnplayed') {
+      app.update((s) => { s[name] = checked; });
+      if (name === 'uniqueAspects') buildBoard(); // change les doublons autorisés dans les listes
+      syncAll();
+      if (name === 'favorUnplayed' && checked && !app.history.length) {
+        toast('Enregistrez vos parties (bouton « On joue ! ») pour que cette option ait de l’effet.');
+      }
+      return;
+    }
     if (event.target.dataset.role !== 'select') return;
     const key = event.target.closest('.slot').dataset.key;
     const { value } = event.target;
@@ -320,5 +376,6 @@ export function renderGame(root, app, signal) {
     reveal([key]);
   }, { signal });
 
+  bindSegmented(root, signal);
   syncAll();
 }

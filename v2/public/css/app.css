@@ -487,8 +487,7 @@ main.container {
 .switch input:checked + .switch__track::after { transform: translateX(20px); }
 .switch input:focus-visible + .switch__track { outline: 3px solid var(--gold); outline-offset: 2px; }
 
-/* ---------- Étape 1 : collection ---------- */
-
+/* Réglages de la partie (étape 2) */
 .setup {
   display: flex;
   flex-wrap: wrap;
@@ -497,6 +496,109 @@ main.container {
   padding: 1.4rem 1.6rem;
   margin-bottom: 1.5rem;
 }
+
+/* ---------- Étape 1 : collection ---------- */
+
+.extensions { margin-bottom: 2rem; }
+.extensions .shelf__title { margin-bottom: 0.9rem; }
+
+.ext-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.9rem;
+}
+
+.ext {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  color: inherit;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  animation: rise 0.45s var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 35ms);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s var(--ease-out), opacity 0.2s;
+}
+@media (hover: hover) {
+  .ext:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .ext:hover .ext__media img { transform: scale(1.04); }
+}
+.ext:active { transform: scale(0.97); }
+.ext:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.ext__media {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+/* Couverture entière (paquets en portrait, boîtes carrées) ; ses bords flous comblent les côtés */
+.ext__media::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  z-index: -1;
+  background: var(--cover) center / cover;
+  filter: blur(14px) brightness(0.55);
+  transition: filter 0.25s;
+}
+.ext__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: filter 0.25s, transform 0.4s var(--ease-out);
+}
+
+.ext__body { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.6rem 0.8rem 0.7rem; }
+.ext__name { font-weight: 600; font-size: 0.95rem; line-height: 1.25; }
+.ext__meta { font-size: 0.75rem; color: var(--muted); }
+
+.ext__count {
+  position: absolute;
+  top: 0.55rem;
+  left: 0.55rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.75);
+  color: var(--gold);
+  font: 600 0.75rem/1.2 var(--font-body);
+  font-variant-numeric: tabular-nums;
+}
+.ext__count:empty { display: none; }
+
+.ext__check {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 2px solid rgb(255 255 255 / 0.7);
+  background: rgb(0 0 0 / 0.45);
+  color: #fff;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.5);
+  transition: background 0.2s, border-color 0.2s;
+}
+.ext__check .icon { width: 16px; height: 16px; stroke-width: 3; display: none; }
+.ext__dash { display: none; width: 11px; height: 3px; border-radius: 2px; background: var(--bg); }
+
+.ext[aria-checked='true'] { border-color: var(--red); }
+.ext[aria-checked='true'] .ext__check { background: var(--red); border-color: var(--red); }
+.ext[aria-checked='true'] .ext__check .icon { display: block; }
+.ext[aria-checked='mixed'] { border-color: rgb(245 197 24 / 0.6); }
+.ext[aria-checked='mixed'] .ext__check { background: var(--gold); border-color: var(--gold); }
+.ext[aria-checked='mixed'] .ext__dash { display: block; }
+.ext[aria-checked='false'] { opacity: 0.6; }
+.ext[aria-checked='false'] .ext__media img { filter: grayscale(1) brightness(0.6); }
+.ext[aria-checked='false'] .ext__media::before { filter: blur(14px) grayscale(1) brightness(0.35); }
 
 .search {
   position: relative;
@@ -1577,6 +1679,8 @@ html[data-nav='prev']::view-transition-new(page) { animation-name: slide-in-from
   .intro { margin-bottom: 1.25rem; }
 
   .setup { padding: 1.2rem; gap: 1.25rem; }
+  .ext-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; }
+  .ext__name { font-size: 0.85rem; }
   .tiles { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.65rem; }
   .shelf__title { font-size: 1.6rem; }
 

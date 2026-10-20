@@ -1,6 +1,6 @@
 // État persistant de l'application (localStorage, plus de cookies).
 
-import { COLLECTABLE, MAX_MODULES, MAX_PLAYERS, knownValues } from './config.js';
+import { COLLECTABLE, MAX_MODULES, MAX_PLAYERS, knownValues, renamed } from './config.js';
 
 export const STATE_KEY = 'mc-generator/v2';
 
@@ -15,6 +15,7 @@ export function defaultState() {
     values: {},
     locked: {},
     lastSaved: null, // signature du dernier tirage enregistré dans l'historique
+    collectionReady: false, // collection déjà renseignée : on ouvre directement l'écran Partie
   };
 }
 
@@ -32,13 +33,16 @@ export function sanitize(raw, content) {
   state.favorUnplayed = state.favorUnplayed === true;
   state.excluded = Object.fromEntries(COLLECTABLE.map((c) => [
     c,
-    Array.isArray(raw?.excluded?.[c]) ? raw.excluded[c].filter((id) => typeof id === 'string') : [],
+    Array.isArray(raw?.excluded?.[c]) ? raw.excluded[c].filter((id) => typeof id === 'string').map(renamed) : [],
   ]));
   state.values = knownValues(raw?.values, content);
   state.locked = Object.fromEntries(
     Object.keys(state.values).filter((key) => raw?.locked?.[key] === true).map((key) => [key, true]),
   );
   state.lastSaved = typeof raw?.lastSaved === 'string' ? raw.lastSaved : null;
+  // États enregistrés avant l'ajout de ce drapeau : collection modifiée ou partie tirée = déjà configuré
+  state.collectionReady = raw?.collectionReady === true || (raw?.collectionReady === undefined
+    && (Object.values(state.excluded).some((ids) => ids.length) || Object.keys(state.values).length > 0));
   return state;
 }
 
@@ -90,5 +94,6 @@ function importV1Cookies(content) {
     state.players = clamp(cookies.j, 1, MAX_PLAYERS);
     found = true;
   }
+  if (found) state.collectionReady = true;
   return found ? state : null;
 }

@@ -73,3 +73,18 @@ test('lien partagé invalide → null', () => {
   assert.equal(decodeGame(code({ p: 7, m: 1, v: {} }), content), null);
   assert.equal(decodeGame(code(null), content), null);
 });
+
+test('sanitize : collectionReady repris des états enregistrés avant son ajout', () => {
+  assert.equal(sanitize({}, content).collectionReady, false);
+  assert.equal(sanitize({ excluded: { heroes: ['thor'] } }, content).collectionReady, true);
+  assert.equal(sanitize({ values: { scenario: 'rhino' } }, content).collectionReady, true);
+  assert.equal(sanitize({ collectionReady: false, values: { scenario: 'rhino' } }, content).collectionReady, false);
+  assert.equal(sanitize({ collectionReady: true }, content).collectionReady, true);
+});
+
+test('identifiant renommé : repris dans la collection et le tirage enregistrés', () => {
+  const renamedContent = { ...content, modules: [{ id: 'milices-kree' }] };
+  const state = sanitize({ excluded: { modules: ['milice-kree'] }, values: { 'module-0': 'milice-kree' } }, renamedContent);
+  assert.deepEqual(state.excluded.modules, ['milices-kree']);
+  assert.deepEqual(state.values, { 'module-0': 'milices-kree' });
+});

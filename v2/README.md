@@ -4,7 +4,8 @@ Tire au sort une partie de **Marvel Champions** (méchant, modules, difficulté,
 
 ## Fonctionnalités
 
-- **Collection** : cochez vos scénarios, modules et héros, puis réglez le nombre de joueurs (1 à 4) et de modules (1 à 3).
+- **Collection** : cochez les extensions que vous possédez (boîte de base, Crâne Rouge…), puis ajustez carte par carte. Aux visites suivantes, le site s'ouvre directement sur la partie.
+- **Partie** : réglez le nombre de joueurs (1 à 4) et de modules (1 à 3).
 - **Tirage** : verrouillez un élément pour le garder, relancez-en un seul ou choisissez-le à la main.
 - **Partage** : un lien recrée la même partie chez un ami.
 - **Historique** : le bouton « On joue ! » enregistre la partie. Vous pouvez ensuite indiquer victoire ou défaite, voir les héros les moins joués et exporter ou importer l'historique.
@@ -25,7 +26,7 @@ npm test
 
 ## Ajouter du contenu
 
-Déposez l'image dans `public/images/<scenarios|modules|heros|modes|affinites>/`. Le nom du fichier devient le libellé affiché. Lancez ensuite `npm run content`, qui convertit l'image en WebP, génère ses miniatures et met à jour `public/data/content.json`, puis committez le tout.
+Déposez l'image dans `public/images/<scenarios|modules|heros|modes|affinites>/`. Le nom du fichier devient le libellé affiché. Lancez ensuite `npm run content`, qui convertit l'image en WebP, génère ses miniatures et met à jour `public/data/content.json`, puis committez le tout. Si l'élément fait partie d'une boîte ou d'un paquet de scénario, ajoutez son identifiant dans `public/js/extensions.js` (`npm test` vérifie que chaque identifiant existe). L'illustration d'une extension se dépose dans `public/images/extensions/<identifiant>.webp` (toute la couverture est affichée, quel que soit son format).
 
 ## Déployer
 

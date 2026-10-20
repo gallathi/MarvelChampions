@@ -133,11 +133,15 @@ function announceAchievements(unlocked) {
   });
 }
 
-function viewFromHash() {
+function viewFromHash(app) {
   const hash = window.location.hash;
   if (hash.startsWith('#/partie')) return 'game';
   if (hash.startsWith('#/historique')) return 'history';
-  return 'collection';
+  if (hash.startsWith('#/collection')) return 'collection';
+  // Accueil : la collection la première fois, ensuite directement la préparation de la partie
+  const view = app.state.collectionReady ? 'game' : 'collection';
+  window.history.replaceState(null, '', HASHES[view]);
+  return view;
 }
 
 /** Affiche la vue demandée (sans animation de transition si `animate` est faux). */
@@ -202,7 +206,7 @@ function route(app) {
     if (!sharedGame) toast('Ce lien de partie est invalide.', 'error');
   }
 
-  const view = viewFromHash();
+  const view = viewFromHash(app);
   const moveFocus = Boolean(currentView) && view !== currentView;
   // Sens du glissement : vers la droite si on avance dans les onglets, vers la gauche sinon
   if (moveFocus) {

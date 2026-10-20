@@ -1,5 +1,7 @@
 // Historique des parties jouées et statistiques (fonctions pures + persistance).
 
+import { renamed } from './config.js';
+
 export const HISTORY_KEY = 'mc-generator/v2/history';
 const MAX_ENTRIES = 1000;
 
@@ -34,7 +36,7 @@ export function sanitizeHistory(raw) {
       id: String(g.id ?? `${Date.parse(g.date)}`),
       date: new Date(g.date).toISOString(),
       scenario: g.scenario,
-      modules: Array.isArray(g.modules) ? g.modules.filter((m) => typeof m === 'string') : [],
+      modules: Array.isArray(g.modules) ? g.modules.filter((m) => typeof m === 'string').map(renamed) : [],
       mode: typeof g.mode === 'string' ? g.mode : null,
       heroes: g.heroes
         .filter((h) => h && typeof h.hero === 'string')

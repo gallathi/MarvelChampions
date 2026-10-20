@@ -8,6 +8,12 @@ export const CATEGORIES = {
 
 export const COLLECTABLE = Object.keys(CATEGORIES).filter((k) => CATEGORIES[k].collectable);
 
+// Identifiants renommés (correction d'un nom d'image) : ancien -> nouveau, pour les données enregistrées
+export const RENAMED = {
+  'milice-kree': 'milices-kree',
+};
+export const renamed = (id) => RENAMED[id] ?? id;
+
 export const MAX_PLAYERS = 4;
 export const MAX_MODULES = 3;
 
@@ -33,7 +39,7 @@ export function knownValues(values, content) {
   if (!values || typeof values !== 'object') return clean;
   for (const [key, id] of Object.entries(values)) {
     const cat = categoryOfSlot(key);
-    if (cat && typeof id === 'string' && content[cat]?.some((item) => item.id === id)) clean[key] = id;
+    if (cat && typeof id === 'string' && content[cat]?.some((item) => item.id === renamed(id))) clean[key] = renamed(id);
   }
   return clean;
 }

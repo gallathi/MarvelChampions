@@ -1,27 +1,12 @@
-// Étape 1 : la collection du joueur et la configuration de la partie.
+// Étape 1 : le matériel que possède le joueur.
 
-import { CATEGORIES, COLLECTABLE, MAX_MODULES, MAX_PLAYERS } from '../config.js';
+import { CATEGORIES, COLLECTABLE } from '../config.js';
 import { validatePools } from '../draw.js';
 import { bump, esc, srcsetOf, stagger, thumbSrc, toast } from '../dom.js';
+import { EXTENSIONS, extensionItems } from '../extensions.js';
 import { icons } from '../icons.js';
 
 const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-const range = (n) => Array.from({ length: n }, (_, i) => i + 1);
-
-function segmented(name, legend, max, current) {
-  return `
-    <fieldset class="segmented">
-      <legend class="field-label">${legend}</legend>
-      <div class="segmented__options">
-        <span class="segmented__indicator" aria-hidden="true"></span>
-        ${range(max).map((n) => `
-          <label class="segmented__option">
-            <input type="radio" name="${name}" value="${n}" ${n === current ? 'checked' : ''}>
-            <span>${n}</span>
-          </label>`).join('')}
-      </div>
-    </fieldset>`;
-}
 
 function playsLabel(plays) {
   if (plays === undefined) return '';
@@ -67,6 +52,26 @@ function shelf(cat, app) {
     </section>`;
 }
 
+function extensionCard(ext, app, i) {
+  const cover = app.content.extensions?.find((item) => item.id === ext.id);
+  const summary = extensionItems(ext)
+    .map(([cat, ids]) => `${ids.length} ${(ids.length > 1 ? CATEGORIES[cat].label : CATEGORIES[cat].singular).toLowerCase()}`)
+    .join(' · ');
+  return `
+    <button type="button" class="ext" role="checkbox" aria-checked="false" data-ext="${esc(ext.id)}" ${stagger(i)}>
+      <span class="ext__media" ${cover ? `style="--cover: url('${esc(new URL(thumbSrc(cover), document.baseURI).href)}')"` : ''}>${cover
+        ? `<img src="${esc(thumbSrc(cover))}" srcset="${esc(srcsetOf(cover))}"
+             sizes="(max-width: 640px) 46vw, 200px" alt="" loading="lazy" decoding="async">`
+        : ''}</span>
+      <span class="ext__body">
+        <span class="ext__name">${esc(ext.name)}</span>
+        <span class="ext__meta">${summary}</span>
+      </span>
+      <span class="ext__count" data-count></span>
+      <span class="ext__check" aria-hidden="true">${icons.check}<span class="ext__dash"></span></span>
+    </button>`;
+}
+
 export function renderCollection(root, app, signal) {
   const { content, state } = app;
 
@@ -75,26 +80,14 @@ export function renderCollection(root, app, signal) {
       <div class="intro">
         <p class="eyebrow">Étape 1</p>
         <h1 id="view-title" class="display" tabindex="-1">Votre collection</h1>
-        <p class="lead">Indiquez le matériel que vous possédez et réglez la partie.
-          Vos choix sont mémorisés sur cet appareil.</p>
+        <p class="lead">Cochez les boîtes que vous possédez, puis ajustez carte par carte si besoin
+          (héros vendus seuls, extension incomplète…). Vos choix sont mémorisés sur cet appareil.</p>
       </div>
 
-      <div class="panel setup">
-        ${segmented('players', 'Joueurs', MAX_PLAYERS, state.players)}
-        ${segmented('moduleCount', 'Modules de rencontre', MAX_MODULES, state.moduleCount)}
-        <label class="switch">
-          <input type="checkbox" name="uniqueAspects" ${state.uniqueAspects ? 'checked' : ''}>
-          <span class="switch__track" aria-hidden="true"></span>
-          <span><span class="field-label">Affinités toutes différentes</span>
-            <span class="switch__hint">Deux joueurs ne peuvent pas avoir la même affinité</span></span>
-        </label>
-        <label class="switch">
-          <input type="checkbox" name="favorUnplayed" ${state.favorUnplayed ? 'checked' : ''}>
-          <span class="switch__track" aria-hidden="true"></span>
-          <span><span class="field-label">Favoriser les moins joués</span>
-            <span class="switch__hint">Héros et méchants rarement joués sortent plus souvent</span></span>
-        </label>
-      </div>
+      <section class="extensions" aria-labelledby="extensions-title">
+        <h2 id="extensions-title" class="shelf__title">Extensions</h2>
+        <div class="ext-grid">${EXTENSIONS.map((ext, i) => extensionCard(ext, app, i)).join('')}</div>
+      </section>
 
       <div class="search">
         ${icons.search}
@@ -134,6 +127,13 @@ export function renderCollection(root, app, signal) {
       ? `<span class="status status--warn">${icons.alert} ${esc(problems[0])}</span>`
       : `<span class="status">${COLLECTABLE.map((cat) =>
           `<strong>${pools[cat].length}</strong> ${CATEGORIES[cat].label.toLowerCase()}`).join(' · ')}</span>`;
+    for (const ext of EXTENSIONS) {
+      const items = extensionItems(ext).flatMap(([cat, ids]) => ids.map((id) => pools[cat].includes(id)));
+      const owned = items.filter(Boolean).length;
+      const card = root.querySelector(`.ext[data-ext="${CSS.escape(ext.id)}"]`);
+      card.setAttribute('aria-checked', owned === items.length ? 'true' : owned ? 'mixed' : 'false');
+      card.querySelector('[data-count]').textContent = owned && owned < items.length ? `${owned}/${items.length}` : '';
+    }
     app.refreshNav();
   }
 
@@ -150,7 +150,20 @@ export function renderCollection(root, app, signal) {
     refresh();
   }
 
+  function toggleExtension(card) {
+    const ext = EXTENSIONS.find((e) => e.id === card.dataset.ext);
+    // Partielle ou absente : on coche tout ; complète : on décoche tout
+    const owned = card.getAttribute('aria-checked') !== 'true';
+    for (const [cat, ids] of extensionItems(ext)) setOwned(cat, ids, owned);
+    bump(card.querySelector('.ext__check'));
+  }
+
   root.addEventListener('click', (event) => {
+    const extEl = event.target.closest('.ext');
+    if (extEl) {
+      toggleExtension(extEl);
+      return;
+    }
     const tileEl = event.target.closest('.tile');
     if (tileEl) {
       const cat = tileEl.closest('.shelf').dataset.cat;
@@ -166,52 +179,12 @@ export function renderCollection(root, app, signal) {
     } else if (action === 'go') {
       const problems = validatePools(app.pools(), state);
       if (problems.length) toast(problems[0], 'error');
-      else app.go('#/partie');
-    }
-  }, { signal });
-
-  root.addEventListener('change', (event) => {
-    const { name, value, checked } = event.target;
-    if (name === 'players' || name === 'moduleCount') {
-      app.update((s) => { s[name] = Number(value); });
-    } else if (name === 'uniqueAspects' || name === 'favorUnplayed') {
-      app.update((s) => { s[name] = checked; });
-      if (name === 'favorUnplayed' && checked && !app.history.length) {
-        toast('Enregistrez vos parties (bouton « On joue ! ») pour que cette option ait de l’effet.');
+      else {
+        app.update((s) => { s.collectionReady = true; });
+        app.go('#/partie');
       }
     }
-    refresh();
   }, { signal });
-
-  // Sliders : on peut aussi faire glisser la pastille du doigt ou à la souris
-  for (const track of root.querySelectorAll('.segmented__options')) {
-    const options = [...track.querySelectorAll('.segmented__option')];
-    const pick = (x) => {
-      const target = options.find((o) => x < o.getBoundingClientRect().right) ?? options.at(-1);
-      const input = target.querySelector('input');
-      if (!input.checked) {
-        input.checked = true;
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-    };
-    track.addEventListener('pointerdown', (event) => {
-      if (event.button !== 0) return;
-      track.setPointerCapture(event.pointerId);
-      track.classList.add('is-dragging');
-    }, { signal });
-    track.addEventListener('pointermove', (event) => {
-      if (track.hasPointerCapture(event.pointerId)) pick(event.clientX);
-    }, { signal });
-    const stop = (event) => {
-      if (track.hasPointerCapture(event.pointerId)) {
-        pick(event.clientX);
-        track.releasePointerCapture(event.pointerId);
-      }
-      track.classList.remove('is-dragging');
-    };
-    track.addEventListener('pointerup', stop, { signal });
-    track.addEventListener('pointercancel', stop, { signal });
-  }
 
   root.querySelector('.search__input').addEventListener('input', (event) => {
     const query = normalize(event.target.value.trim());

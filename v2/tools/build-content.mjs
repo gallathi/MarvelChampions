@@ -23,6 +23,7 @@ const CATEGORIES = {
   heroes: 'heros',
   modes: 'modes',
   aspects: 'affinites',
+  extensions: 'extensions', // illustrations des boîtes, nommées d'après l'identifiant de public/js/extensions.js
 };
 
 // Ordre imposé quand l'ordre alphabétique n'a pas de sens
